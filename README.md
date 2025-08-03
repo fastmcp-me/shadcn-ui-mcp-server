@@ -302,6 +302,15 @@ Create a `.cursorrules` file in your project root:
 }
 ```
 
+### Claude Code (Terminal) Integration
+
+For Claude Code terminal users, you can add the MCP server directly:
+
+```bash
+# Add the shadcn-ui MCP server with GitHub token
+claude mcp add shadcn -- bunx -y @jpisnice/shadcn-ui-mcp-server --github-api-key YOUR_API_KEY
+```
+
 ### Claude Desktop Integration
 
 Add to your Claude Desktop configuration (`~/.config/Claude/claude_desktop_config.json`):
