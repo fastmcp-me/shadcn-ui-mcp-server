@@ -37,7 +37,7 @@ Usage:
 
 Options:
   --github-api-key, -g <token>    GitHub Personal Access Token for API access
-  --framework, -f <framework>     Framework to use: 'react' or 'svelte' (default: react)
+  --framework, -f <framework>     Framework to use: 'react' or 'svelte' or 'vue' (default: react)
   --help, -h                      Show this help message
   --version, -v                   Show version information
 
@@ -46,6 +46,7 @@ Examples:
   npx shadcn-ui-mcp-server --github-api-key ghp_your_token_here
   npx shadcn-ui-mcp-server -g ghp_your_token_here
   npx shadcn-ui-mcp-server --framework svelte
+  npx shadcn-ui-mcp-server --framework vue
   npx shadcn-ui-mcp-server -f react
 
 Environment Variables:
@@ -99,7 +100,7 @@ For more information, visit: https://github.com/Jpisnice/shadcn-ui-mcp-server
  */
 async function main() {
   try {
-    logInfo("Starting Shadcn UI v4 MCP Server...")
+    logInfo("Starting Shadcn UI MCP Server...")
 
     const { githubApiKey } = await parseArgs()
 
@@ -121,6 +122,7 @@ async function main() {
 
     // Initialize the MCP server with metadata and capabilities
     // Following MCP SDK 1.16.0 best practices
+
     const server = new Server(
       {
         name: "shadcn-ui-mcp-server",
