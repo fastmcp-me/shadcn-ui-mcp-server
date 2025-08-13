@@ -5,7 +5,7 @@
  * resources based on parameters in the URI.
  */
 
-import { getFramework } from "./utils/framework.js"
+import { getFramework } from "../utils/framework.js"
 
 /**
  * Resource template definitions exported to the MCP handler
@@ -78,7 +78,21 @@ export const getResourceTemplate = (uri: string) => {
 
         // Get current framework and determine package name
         const framework = getFramework()
-        const packageName = framework === "svelte" ? "shadcn-svelte" : "shadcn"
+        let packageName: string
+        switch (framework) {
+          case "svelte":
+            packageName = "shadcn-svelte"
+            break
+          case "vue":
+            packageName = "shadcn-vue"
+            break
+          case "react":
+            packageName = "shadcn"
+            break
+          default:
+            packageName = "shadcn"
+            break
+        }
 
         // Generate installation script based on package manager
         let installCommand: string
@@ -155,7 +169,7 @@ export const getResourceTemplate = (uri: string) => {
         }
 
         // Determine package name
-        let packageName
+        let packageName:any
         switch (currentFramework) {
           case "svelte":
             packageName = "shadcn-svelte"
@@ -171,9 +185,9 @@ export const getResourceTemplate = (uri: string) => {
             break
         }
         // Generate installation guide based on build tool and package manager
-        let guides
+        let guides:any
         switch (currentFramework) {
-          case "svelte":
+          case "svelte": {
             guides = {
               vite: {
                 description: "Installation guide for Svelte Vite project",
@@ -277,6 +291,8 @@ export const getResourceTemplate = (uri: string) => {
                 ],
               },
             }
+            break
+          }
           case "react":
             guides = {
               next: {

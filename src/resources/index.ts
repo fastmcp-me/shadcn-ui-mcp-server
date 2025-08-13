@@ -5,7 +5,7 @@
  * Resources are static content or dynamically generated content referenced by URIs.
  */
 
-import { logError } from './utils/logger.js';
+import { logError } from '../utils/logger.js';
 
 /**
  * Resource definitions exported to the MCP handler

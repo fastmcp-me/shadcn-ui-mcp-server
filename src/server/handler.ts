@@ -18,17 +18,17 @@ import {
   McpError
 } from "@modelcontextprotocol/sdk/types.js";
 import { type Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { resourceHandlers, resources } from "./resources.js";
-import { promptHandlers, prompts } from "./prompts.js";
-import { toolHandlers, tools } from "./tools/index.js";
+import { resourceHandlers, resources } from "../resources/index.js";
+import { promptHandlers, prompts } from "../prompts/index.js";
+import { toolHandlers, tools } from "../tools/index.js";
 import {
   getResourceTemplate,
   resourceTemplates,
-} from "./resource-templates.js";
+} from "../resource-templates/index.js";
 import { z } from "zod";
-import { validateAndSanitizeParams } from './utils/validation.js';
-import { circuitBreakers } from './utils/circuit-breaker.js';
-import { logError, logInfo } from './utils/logger.js';
+import { validateAndSanitizeParams } from '../utils/validation.js';
+import { circuitBreakers } from '../utils/circuit-breaker.js';
+import { logError, logInfo } from '../utils/logger.js';
 
 // Define basic component schemas here for tool validation
 const componentSchema = { componentName: z.string() };
