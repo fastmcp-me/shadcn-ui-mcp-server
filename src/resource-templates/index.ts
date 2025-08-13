@@ -78,7 +78,21 @@ export const getResourceTemplate = (uri: string) => {
 
         // Get current framework and determine package name
         const framework = getFramework()
-        const packageName = framework === "svelte" ? "shadcn-svelte" : "shadcn"
+        let packageName: string
+        switch (framework) {
+          case "svelte":
+            packageName = "shadcn-svelte"
+            break
+          case "vue":
+            packageName = "shadcn-vue"
+            break
+          case "react":
+            packageName = "shadcn"
+            break
+          default:
+            packageName = "shadcn"
+            break
+        }
 
         // Generate installation script based on package manager
         let installCommand: string
