@@ -8,12 +8,12 @@ A Model Context Protocol (MCP) server that provides AI assistants with comprehen
 ## 🚀 Key Features
 
 - **Component Source Code**: Get the latest shadcn/ui v4 component TypeScript source
-- **Component Demos**: Access example implementations and usage patterns  
+- **Component Demos**: Access example implementations and usage patterns
 - **Blocks Support**: Retrieve complete block implementations (dashboards, calendars, login forms, etc.)
 - **Metadata Access**: Get component dependencies, descriptions, and configuration details
 - **Directory Browsing**: Explore the shadcn/ui repository structure
 - **GitHub API Integration**: Efficient caching and intelligent rate limit handling
-- **Framework Support**: Switch between React (shadcn/ui) and Svelte (shadcn-svelte) implementations
+- **Framework Support**: Switch between React (shadcn/ui),Vue (shadcn-vue) or Svelte (shadcn-svelte) implementations
 
 ## 📦 Quick Start
 
@@ -41,14 +41,20 @@ npx @jpisnice/shadcn-ui-mcp-server --framework svelte
 # Use Svelte with GitHub token
 npx @jpisnice/shadcn-ui-mcp-server --framework svelte --github-api-key ghp_your_token_here
 
+# Switch to Vue framework with GitHub token (default is react)
+npx @jpisnice/shadcn-ui-mcp-server --framework vue --github-api-key ghp_your_token_here
 # Using environment variable for framework
 export FRAMEWORK=svelte
+npx @jpisnice/shadcn-ui-mcp-server
+
+# Or use Vue
+export FRAMEWORK=vue
 npx @jpisnice/shadcn-ui-mcp-server
 ```
 
 **🎯 Try it now**: Run `npx @jpisnice/shadcn-ui-mcp-server --help` to see all options!
 
-**🔄 Framework Selection**: The server supports both React (shadcn/ui) and Svelte (shadcn-svelte) implementations. Use `--framework svelte` to switch to Svelte components.
+**🔄 Framework Selection**: The server supports React (shadcn/ui), Svelte (shadcn-svelte), and Vue (shadcn-vue) implementations. Use `--framework svelte` or `--framework vue` to switch frameworks.
 
 ### 🔧 Command Line Options
 
@@ -57,13 +63,13 @@ shadcn-ui-mcp-server [options]
 
 Options:
   --github-api-key, -g <token>    GitHub Personal Access Token
-  --framework, -f <framework>     Framework to use: 'react' or 'svelte' (default: react)
-  --help, -h                      Show help message  
+  --framework, -f <framework>     Framework to use: 'react', 'svelte' or 'vue' (default: react)
+  --help, -h                      Show help message
   --version, -v                   Show version information
 
 Environment Variables:
   GITHUB_PERSONAL_ACCESS_TOKEN    Alternative way to provide GitHub token
-  FRAMEWORK                       Framework to use: 'react' or 'svelte' (default: react)
+  FRAMEWORK                       Framework to use: 'react', 'svelte' or 'vue' (default: react)
 
 Examples:
   npx @jpisnice/shadcn-ui-mcp-server --help
@@ -78,6 +84,7 @@ Examples:
 ## 🔑 GitHub API Token Setup
 
 **Why do you need a token?**
+
 - Without token: Limited to 60 API requests per hour
 - With token: Up to 5,000 requests per hour
 - Better reliability and faster responses
@@ -85,10 +92,12 @@ Examples:
 ### 📝 Getting Your Token (2 minutes)
 
 1. **Go to GitHub Settings**:
+
    - Visit [GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)](https://github.com/settings/tokens)
    - Or: GitHub Profile → Settings → Developer settings → Personal access tokens
 
 2. **Generate New Token**:
+
    - Click "Generate new token (classic)"
    - Add a note: "shadcn-ui MCP server"
    - **Expiration**: Choose your preference (90 days recommended)
@@ -101,11 +110,13 @@ Examples:
 ### 🚀 Using Your Token
 
 **Method 1: Command Line (Quick testing)**
+
 ```bash
 npx @jpisnice/shadcn-ui-mcp-server --github-api-key ghp_your_token_here
 ```
 
 **Method 2: Environment Variable (Recommended)**
+
 ```bash
 # Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
 export GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_token_here
@@ -120,14 +131,16 @@ The MCP server supports both **React** (shadcn/ui) and **Svelte** (shadcn-svelte
 
 ### 📋 Framework Comparison
 
-| Framework | Repository | File Extension | Description |
-|-----------|------------|----------------|-------------|
-| **React** (default) | `shadcn-ui/ui` | `.tsx` | React components from shadcn/ui v4 |
-| **Svelte** | `huntabyte/shadcn-svelte` | `.svelte` | Svelte components from shadcn-svelte |
+| Framework           | Repository                | File Extension | Description                          |
+| ------------------- | ------------------------- | -------------- | ------------------------------------ |
+| **React** (default) | `shadcn-ui/ui`            | `.tsx`         | React components from shadcn/ui v4   |
+| **Svelte**          | `huntabyte/shadcn-svelte` | `.svelte`      | Svelte components from shadcn-svelte |
+| **Vue**             | `unovue/shadcn-vue`       | `.vue`         | Vue components from shadcn-vue       |
 
 ### 🎯 How to Switch Frameworks
 
 **Method 1: Command Line Argument (Recommended)**
+
 ```bash
 # Use React (default)
 npx @jpisnice/shadcn-ui-mcp-server
@@ -136,12 +149,17 @@ npx @jpisnice/shadcn-ui-mcp-server
 npx @jpisnice/shadcn-ui-mcp-server --framework svelte
 npx @jpisnice/shadcn-ui-mcp-server -f svelte
 
+# Switch to Vue
+npx @jpisnice/shadcn-ui-mcp-server --framework vue
+npx @jpisnice/shadcn-ui-mcp-server -f vue
+
 # Switch back to React
 npx @jpisnice/shadcn-ui-mcp-server --framework react
 npx @jpisnice/shadcn-ui-mcp-server -f react
 ```
 
 **Method 2: Environment Variable**
+
 ```bash
 # Use Svelte
 export FRAMEWORK=svelte
@@ -151,22 +169,32 @@ npx @jpisnice/shadcn-ui-mcp-server
 export FRAMEWORK=react
 npx @jpisnice/shadcn-ui-mcp-server
 
+# Use Vue
+export FRAMEWORK=vue
+npx @jpisnice/shadcn-ui-mcp-server
+
 # Or set for single command
 FRAMEWORK=svelte npx @jpisnice/shadcn-ui-mcp-server
+FRAMEWORK=vue npx @jpisnice/shadcn-ui-mcp-server
 ```
 
 **Method 3: Combined with GitHub Token**
+
 ```bash
 # Svelte with GitHub token
 npx @jpisnice/shadcn-ui-mcp-server --framework svelte --github-api-key ghp_your_token_here
 
 # React with GitHub token (default)
 npx @jpisnice/shadcn-ui-mcp-server --github-api-key ghp_your_token_here
+
+# Vue with GitHub token
+npx @jpisnice/shadcn-ui-mcp-server --framework vue --github-api-key ghp_your_token_here
 ```
 
 ### 🔍 Framework Detection
 
 The server will log which framework is being used:
+
 ```bash
 INFO: Framework set to 'svelte' via command line argument
 INFO: MCP Server configured for SVELTE framework
@@ -174,7 +202,15 @@ INFO: Repository: huntabyte/shadcn-svelte
 INFO: File extension: .svelte
 ```
 
+```bash
+INFO: Framework set to 'vue' via command line argument
+INFO: MCP Server configured for VUE framework
+INFO: Repository: unovue/shadcn-vue
+INFO: File extension: .vue
+```
+
 **⚠️ Important**: When using environment variables, make sure to use the correct syntax:
+
 - ✅ Correct: `export FRAMEWORK=svelte && npx @jpisnice/shadcn-ui-mcp-server`
 - ✅ Correct: `FRAMEWORK=svelte npx @jpisnice/shadcn-ui-mcp-server`
 - ❌ Incorrect: `FRAMEWORK=svelte npx @jpisnice/shadcn-ui-mcp-server` (without proper spacing)
@@ -183,8 +219,9 @@ INFO: File extension: .svelte
 
 - **React Projects**: Use default or `--framework react` for React/Next.js applications
 - **Svelte Projects**: Use `--framework svelte` for Svelte/SvelteKit applications
+- **Vue Projects**: Use `--framework vue` for Vue/Nuxt applications
 - **Multi-Framework Development**: Switch between frameworks to compare implementations
-- **Learning**: Explore both React and Svelte versions of the same components
+- **Learning**: Explore React, Svelte, and Vue versions of the same components
 
 ## 🛠️ Editor Integration
 
@@ -193,6 +230,7 @@ INFO: File extension: .svelte
 #### Method 1: Using Continue Extension
 
 1. **Install Continue Extension**:
+
    - Open VS Code
    - Go to Extensions (Ctrl+Shift+X)
    - Search for "Continue" and install it
@@ -208,12 +246,33 @@ INFO: File extension: .svelte
     "mcpServers": {
       "shadcn-ui": {
         "command": "npx",
-        "args": ["@jpisnice/shadcn-ui-mcp-server", "--github-api-key", "ghp_your_token_here"]
+        "args": [
+          "@jpisnice/shadcn-ui-mcp-server",
+          "--github-api-key",
+          "ghp_your_token_here"
+        ]
       },
       // If using Svelte, do this instead:
       "shadcn-ui-svelte": {
         "command": "npx",
-        "args": ["@jpisnice/shadcn-ui-mcp-server", "--framework", "svelte", "--github-api-key", "ghp_your_token_here"]
+        "args": [
+          "@jpisnice/shadcn-ui-mcp-server",
+          "--framework",
+          "svelte",
+          "--github-api-key",
+          "ghp_your_token_here"
+        ]
+      },
+      // If using Vue, do this instead:
+      "shadcn-ui-vue": {
+        "command": "npx",
+        "args": [
+          "@jpisnice/shadcn-ui-mcp-server",
+          "--framework",
+          "vue",
+          "--github-api-key",
+          "ghp_your_token_here"
+        ]
       }
     }
   }
@@ -223,6 +282,7 @@ INFO: File extension: .svelte
 #### Method 2: Using Claude Extension
 
 1. **Install Claude Extension**:
+
    - Search for "Claude" in VS Code extensions
    - Install the official Claude extension
 
@@ -239,10 +299,18 @@ INFO: File extension: .svelte
         "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
       }
     },
-      // If using Svelte, do this instead:
+    // If using Svelte, do this instead:
     "shadcn-ui-svelte": {
       "command": "npx",
       "args": ["@jpisnice/shadcn-ui-mcp-server", "--framework", "svelte"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
+      }
+    },
+    // If using Vue, do this instead:
+    "shadcn-ui-vue": {
+      "command": "npx",
+      "args": ["@jpisnice/shadcn-ui-mcp-server", "--framework", "vue"],
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
       }
@@ -256,21 +324,44 @@ INFO: File extension: .svelte
 #### Method 1: Global Configuration
 
 1. **Open Cursor Settings**:
+
    - Go to Settings (Cmd/Ctrl + ,)
    - Search for "MCP" or "Model Context Protocol"
 
 2. **Add MCP Server Configuration**:
+
 ```json
 {
   "mcpServers": {
     "shadcn-ui": {
       "command": "npx",
-      "args": ["@jpisnice/shadcn-ui-mcp-server", "--github-api-key", "ghp_your_token_here"]
+      "args": [
+        "@jpisnice/shadcn-ui-mcp-server",
+        "--github-api-key",
+        "ghp_your_token_here"
+      ]
     },
     // If using Svelte, do this instead:
     "shadcn-ui-svelte": {
       "command": "npx",
-      "args": ["@jpisnice/shadcn-ui-mcp-server", "--framework", "svelte", "--github-api-key", "ghp_your_token_here"]
+      "args": [
+        "@jpisnice/shadcn-ui-mcp-server",
+        "--framework",
+        "svelte",
+        "--github-api-key",
+        "ghp_your_token_here"
+      ]
+    },
+    // If using Vue, do this instead:
+    "shadcn-ui-vue": {
+      "command": "npx",
+      "args": [
+        "@jpisnice/shadcn-ui-mcp-server",
+        "--framework",
+        "vue",
+        "--github-api-key",
+        "ghp_your_token_here"
+      ]
     }
   }
 }
@@ -297,6 +388,14 @@ Create a `.cursorrules` file in your project root:
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
       }
+    },
+    // If using Vue, do this instead:
+    "shadcn-ui-vue": {
+      "command": "npx",
+      "args": ["@jpisnice/shadcn-ui-mcp-server", "--framework", "vue"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
+      }
     }
   }
 }
@@ -320,12 +419,33 @@ Add to your Claude Desktop configuration (`~/.config/Claude/claude_desktop_confi
   "mcpServers": {
     "shadcn-ui": {
       "command": "npx",
-      "args": ["@jpisnice/shadcn-ui-mcp-server", "--github-api-key", "ghp_your_token_here"]
+      "args": [
+        "@jpisnice/shadcn-ui-mcp-server",
+        "--github-api-key",
+        "ghp_your_token_here"
+      ]
     },
     // If using Svelte, do this instead:
     "shadcn-ui-svelte": {
       "command": "npx",
-      "args": ["@jpisnice/shadcn-ui-mcp-server", "--framework", "svelte", "--github-api-key", "ghp_your_token_here"]
+      "args": [
+        "@jpisnice/shadcn-ui-mcp-server",
+        "--framework",
+        "svelte",
+        "--github-api-key",
+        "ghp_your_token_here"
+      ]
+    },
+    // If using Vue, do this instead:
+    "shadcn-ui-vue": {
+      "command": "npx",
+      "args": [
+        "@jpisnice/shadcn-ui-mcp-server",
+        "--framework",
+        "vue",
+        "--github-api-key",
+        "ghp_your_token_here"
+      ]
     }
   }
 }
@@ -358,6 +478,7 @@ Or with environment variable:
 ### Continue.dev Integration
 
 1. **Install Continue.dev**:
+
    - Download from [continue.dev](https://continue.dev)
    - Install the application
 
@@ -370,17 +491,43 @@ Or with environment variable:
 {
   "name": "shadcn-ui",
   "command": "npx",
-  "args": ["@jpisnice/shadcn-ui-mcp-server", "--github-api-key", "ghp_your_token_here"]
+  "args": [
+    "@jpisnice/shadcn-ui-mcp-server",
+    "--github-api-key",
+    "ghp_your_token_here"
+  ]
 }
 ```
 
-Or for Svelte:
+For Svelte:
 
 ```json
 {
   "name": "shadcn-ui-svelte",
   "command": "npx",
-  "args": ["@jpisnice/shadcn-ui-mcp-server", "--framework", "svelte", "--github-api-key", "ghp_your_token_here"]
+  "args": [
+    "@jpisnice/shadcn-ui-mcp-server",
+    "--framework",
+    "svelte",
+    "--github-api-key",
+    "ghp_your_token_here"
+  ]
+}
+```
+
+Or for Vue:
+
+```json
+{
+  "name": "shadcn-ui-vue",
+  "command": "npx",
+  "args": [
+    "@jpisnice/shadcn-ui-mcp-server",
+    "--framework",
+    "vue",
+    "--github-api-key",
+    "ghp_your_token_here"
+  ]
 }
 ```
 
@@ -389,7 +536,9 @@ Or for Svelte:
 ### Getting Component Source Code
 
 Ask your AI assistant:
+
 ```
+
 "Show me the source code for the shadcn/ui button component"
 ```
 
@@ -398,8 +547,11 @@ The AI can now access the complete TypeScript source code for the button compone
 ### Creating a Dashboard
 
 Ask your AI assistant:
+
 ```
+
 "Create a dashboard using shadcn/ui components. Use the dashboard-01 block as a starting point"
+
 ```
 
 The AI can retrieve the complete dashboard block implementation and customize it for your needs.
@@ -407,8 +559,11 @@ The AI can retrieve the complete dashboard block implementation and customize it
 ### Building a Login Form
 
 Ask your AI assistant:
+
 ```
+
 "Help me build a login form using shadcn/ui components. Show me the available form components"
+
 ```
 
 The AI can list all available components and help you build the form.
@@ -452,7 +607,7 @@ The MCP server provides these tools for AI assistants:
 
 // Get dashboard block
 {
-  "tool": "get_block", 
+  "tool": "get_block",
   "arguments": { "blockName": "dashboard-01" }
 }
 ```
@@ -462,12 +617,14 @@ The MCP server provides these tools for AI assistants:
 ### Common Issues
 
 **"Rate limit exceeded" errors:**
+
 ```bash
 # Solution: Add GitHub API token
 npx @jpisnice/shadcn-ui-mcp-server --github-api-key ghp_your_token_here
 ```
 
 **"Command not found" errors:**
+
 ```bash
 # Solution: Install Node.js 18+ and ensure npx is available
 node --version  # Should be 18+
@@ -475,6 +632,7 @@ npx --version   # Should work
 ```
 
 **Component not found:**
+
 ```bash
 # Check available components first
 npx @jpisnice/shadcn-ui-mcp-server
@@ -482,6 +640,7 @@ npx @jpisnice/shadcn-ui-mcp-server
 ```
 
 **Network/proxy issues:**
+
 ```bash
 # Set proxy if needed
 export HTTP_PROXY=http://your-proxy:8080
@@ -490,6 +649,7 @@ npx @jpisnice/shadcn-ui-mcp-server
 ```
 
 **Editor not recognizing MCP server:**
+
 ```bash
 # Verify the server is running
 npx @jpisnice/shadcn-ui-mcp-server --help
@@ -529,7 +689,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🔗 Related Projects
 
 - [shadcn/ui](https://ui.shadcn.com/) - React component library (default framework)
-- [shadcn-svelte](https://www.shadcn-svelte.com/) - Svelte component library (use `--framework svelte`)
+- [shadcn-svelte](https://www.shadcn-svelte.com/) - Svelte component library
+- [shadcn-vue](https://www.shadcn-vue.com/) - Vue component library
 - [Model Context Protocol](https://modelcontextprotocol.io/) - The protocol specification
 - [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) - Official MCP SDK
 
