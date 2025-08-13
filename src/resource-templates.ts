@@ -155,7 +155,7 @@ export const getResourceTemplate = (uri: string) => {
         }
 
         // Determine package name
-        let packageName
+        let packageName:any
         switch (currentFramework) {
           case "svelte":
             packageName = "shadcn-svelte"
@@ -171,9 +171,9 @@ export const getResourceTemplate = (uri: string) => {
             break
         }
         // Generate installation guide based on build tool and package manager
-        let guides
+        let guides:any
         switch (currentFramework) {
-          case "svelte":
+          case "svelte": {
             guides = {
               vite: {
                 description: "Installation guide for Svelte Vite project",
@@ -277,6 +277,8 @@ export const getResourceTemplate = (uri: string) => {
                 ],
               },
             }
+            break
+          }
           case "react":
             guides = {
               next: {

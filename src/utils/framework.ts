@@ -5,7 +5,7 @@
  * based on environment variables or command line arguments.
  *
  * Usage:
- * - Set FRAMEWORK environment variable to 'react' or 'svelte'
+ * - Set FRAMEWORK environment variable to 'react' or 'svelte' or 'vue'
  * - Or use --framework command line argument
  * - Defaults to 'react' if not specified
  */
@@ -20,7 +20,7 @@ const DEFAULT_FRAMEWORK: Framework = "react"
 
 /**
  * Get the current framework from environment or command line arguments
- * @returns The selected framework ('react' or 'svelte')
+ * @returns The selected framework ('react' or 'svelte' or 'vue')
  */
 export function getFramework(): Framework {
   // Check command line arguments first
