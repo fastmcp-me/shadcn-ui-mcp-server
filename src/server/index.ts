@@ -1,5 +1,5 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
-import { setupHandlers } from "../handler.js"
+import { setupHandlers } from "./handler.js"
 import {
   validateFrameworkSelection,
   getAxiosImplementation,

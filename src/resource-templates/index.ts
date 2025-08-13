@@ -5,7 +5,7 @@
  * resources based on parameters in the URI.
  */
 
-import { getFramework } from "./utils/framework.js"
+import { getFramework } from "../utils/framework.js"
 
 /**
  * Resource template definitions exported to the MCP handler
