@@ -2,6 +2,7 @@ import { handleGetComponent } from './components/get-component.js';
 import { handleGetComponentDemo } from './components/get-component-demo.js';
 import { handleListComponents } from './components/list-components.js';
 import { handleGetComponentMetadata } from './components/get-component-metadata.js';
+import { handleCreateComponent } from './components/create-component.js';
 import { handleGetDirectoryStructure } from './repository/get-directory-structure.js';
 import { handleGetBlock } from './blocks/get-block.js';
 import { handleListBlocks } from './blocks/list-blocks.js';
@@ -10,6 +11,7 @@ import { schema as getComponentSchema } from './components/get-component.js';
 import { schema as getComponentDemoSchema } from './components/get-component-demo.js';
 import { schema as listComponentsSchema } from './components/list-components.js';
 import { schema as getComponentMetadataSchema } from './components/get-component-metadata.js';
+import { schema as createComponentSchema } from './components/create-component.js';
 import { schema as getDirectoryStructureSchema } from './repository/get-directory-structure.js';
 import { schema as getBlockSchema } from './blocks/get-block.js';
 import { schema as listBlocksSchema } from './blocks/list-blocks.js';
@@ -19,6 +21,7 @@ export const toolHandlers = {
   get_component_demo: handleGetComponentDemo,
   list_components: handleListComponents,
   get_component_metadata: handleGetComponentMetadata,
+  create_component: handleCreateComponent,
   get_directory_structure: handleGetDirectoryStructure,
   get_block: handleGetBlock,
   list_blocks: handleListBlocks
@@ -29,6 +32,7 @@ export const toolSchemas = {
   get_component_demo: getComponentDemoSchema,
   list_components: listComponentsSchema,
   get_component_metadata: getComponentMetadataSchema,
+  create_component: createComponentSchema,
   get_directory_structure: getDirectoryStructureSchema,
   get_block: getBlockSchema,
   list_blocks: listBlocksSchema
@@ -67,6 +71,15 @@ export const tools = {
     inputSchema: {
       type: 'object',
       properties: getComponentMetadataSchema,
+      required: ['componentName']
+    }
+  },
+  'create_component': {
+    name: 'create_component',
+    description: 'Create a new shadcn/ui component following existing patterns and conventions',
+    inputSchema: {
+      type: 'object',
+      properties: createComponentSchema,
       required: ['componentName']
     }
   },
