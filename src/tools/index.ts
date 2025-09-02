@@ -5,6 +5,7 @@ import { handleGetComponentMetadata } from './components/get-component-metadata.
 import { handleCreateComponent } from './components/create-component.js';
 import { handlePushComponent } from './components/push-component.js';
 import { handlePreviewComponent } from './components/preview-component.js';
+import { previewDashboard } from './components/preview-dashboard.js';
 import { handleGetDirectoryStructure } from './repository/get-directory-structure.js';
 import { handleGetBlock } from './blocks/get-block.js';
 import { handleListBlocks } from './blocks/list-blocks.js';
@@ -16,6 +17,7 @@ import { schema as getComponentMetadataSchema } from './components/get-component
 import { schema as createComponentSchema } from './components/create-component.js';
 import { schema as pushComponentSchema } from './components/push-component.js';
 import { schema as previewComponentSchema } from './components/preview-component.js';
+import { schema as previewDashboardSchema } from './components/preview-dashboard.js';
 import { schema as getDirectoryStructureSchema } from './repository/get-directory-structure.js';
 import { schema as getBlockSchema } from './blocks/get-block.js';
 import { schema as listBlocksSchema } from './blocks/list-blocks.js';
@@ -28,6 +30,7 @@ export const toolHandlers = {
   create_component: handleCreateComponent,
   push_component: handlePushComponent,
   preview_component: handlePreviewComponent,
+  preview_dashboard: previewDashboard,
   get_directory_structure: handleGetDirectoryStructure,
   get_block: handleGetBlock,
   list_blocks: handleListBlocks
@@ -41,6 +44,7 @@ export const toolSchemas = {
   create_component: createComponentSchema,
   push_component: pushComponentSchema,
   preview_component: previewComponentSchema,
+  preview_dashboard: previewDashboardSchema,
   get_directory_structure: getDirectoryStructureSchema,
   get_block: getBlockSchema,
   list_blocks: listBlocksSchema
@@ -107,6 +111,14 @@ export const tools = {
       type: 'object',
       properties: previewComponentSchema,
       required: ['componentName', 'componentCode']
+    }
+  },
+  'preview_dashboard': {
+    name: 'preview_dashboard',
+    description: 'Generate a comprehensive dashboard showing all created components with search, filtering, and management features',
+    inputSchema: {
+      type: 'object',
+      properties: previewDashboardSchema
     }
   },
   'get_directory_structure': {

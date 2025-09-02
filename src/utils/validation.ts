@@ -116,6 +116,18 @@ export const validationSchemas = {
       .description('Whether to include Tailwind CSS and shadcn/ui styles')
   }),
 
+  // Preview dashboard schemas
+  previewDashboard: Joi.object({
+    showAll: Joi.boolean().optional().default(true)
+      .description('Whether to show all components or only recent ones'),
+    theme: Joi.string().optional().valid('light', 'dark', 'auto')
+      .default('auto')
+      .description('Dashboard theme preference'),
+    sortBy: Joi.string().optional().valid('name', 'date', 'type')
+      .default('date')
+      .description('Sort components by criteria')
+  }),
+
   // Directory structure schemas
   directoryStructure: Joi.object({
     path: Joi.string().optional().max(500)
@@ -211,6 +223,7 @@ export function getValidationSchema(method: string): Joi.ObjectSchema | undefine
     'create_component': validationSchemas.createComponent,
     'push_component': validationSchemas.pushComponent,
     'preview_component': validationSchemas.previewComponent,
+    'preview_dashboard': validationSchemas.previewDashboard,
     
     // Search methods
     'search_components': validationSchemas.searchQuery,
