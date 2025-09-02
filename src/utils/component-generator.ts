@@ -66,12 +66,22 @@ export function generateComponentCode({
   componentName,
   componentType = 'ui',
   baseComponentCode = '',
-  description
+  description,
+  customVariants,
+  customSizes,
+  customSourceStyles
 }: {
   componentName: string;
   componentType?: string;
   baseComponentCode?: string;
   description?: string;
+  customVariants?: string[];
+  customSizes?: string[];
+  customSourceStyles?: {
+    baseClasses?: string;
+    variantStyles?: Record<string, string>;
+    sizeStyles?: Record<string, string>;
+  };
 }): string {
   const pascalName = toPascalCase(componentName);
   const patterns = baseComponentCode ? extractBaseComponentPatterns(baseComponentCode) : {
@@ -122,18 +132,42 @@ export function generateComponentCode({
   };
 
   const variants = variantsByType[componentType as keyof typeof variantsByType] || variantsByType.ui;
+  
+  // Merge custom variants if provided
+  const finalVariants = {
+    variant: customVariants && customVariants.length > 0 
+      ? [...variants.variant, ...customVariants]
+      : variants.variant,
+    size: customSizes && customSizes.length > 0
+      ? [...variants.size, ...customSizes]
+      : variants.size
+  };
+
+  // Use custom base classes or default
+  const baseClasses = customSourceStyles?.baseClasses || 
+    "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
 
   const componentCode = `${allImports.join('\n')}
 
 const ${componentName}Variants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "${baseClasses}",
   {
     variants: {
       variant: {
-        ${variants.variant.map(v => `${v}: "${getVariantClasses(v, componentType)}"`).join(',\n        ')}
+        ${finalVariants.variant.map(v => {
+          // Use custom variant styles if provided, otherwise use default
+          const customStyle = customSourceStyles?.variantStyles?.[v];
+          const style = customStyle || getVariantClasses(v, componentType);
+          return `${v}: "${style}"`;
+        }).join(',\n        ')}
       },
       size: {
-        ${variants.size.map(s => `${s}: "${getSizeClasses(s)}"`).join(',\n        ')}
+        ${finalVariants.size.map(s => {
+          // Use custom size styles if provided, otherwise use default
+          const customStyle = customSourceStyles?.sizeStyles?.[s];
+          const style = customStyle || getSizeClasses(s);
+          return `${s}: "${style}"`;
+        }).join(',\n        ')}
       },
     },
     defaultVariants: {
@@ -209,7 +243,9 @@ function getVariantClasses(variant: string, componentType: string): string {
     }
   };
 
-  return variantMap[componentType]?.[variant] || variantMap.ui.default;
+  return variantMap[componentType]?.[variant] || 
+         variantMap.ui[variant] || 
+         "bg-muted text-muted-foreground hover:bg-muted/80"; // Default for custom variants
 }
 
 /**
@@ -224,7 +260,7 @@ function getSizeClasses(size: string): string {
     icon: "h-10 w-10"
   };
 
-  return sizeMap[size] || sizeMap.default;
+  return sizeMap[size] || "h-10 px-4 py-2"; // Default for custom sizes
 }
 
 /**

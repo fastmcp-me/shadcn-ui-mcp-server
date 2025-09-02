@@ -17,6 +17,8 @@ A Model Context Protocol (MCP) server that provides AI assistants with comprehen
 - **🏗️ Blocks Support** - Complete block implementations (dashboards, calendars, forms)
 - **📋 Metadata Access** - Dependencies, descriptions, and configuration details
 - **🔍 Directory Browsing** - Explore repository structures
+- **🚀 Component Creation** - Generate new components following existing patterns
+- **📤 Component Push** - Push created components back to UI repositories (with GitHub token)
 - **⚡ Smart Caching** - Efficient GitHub API integration with rate limit handling
 
 ## 🚀 Quick Start
@@ -57,14 +59,20 @@ This MCP server supports three popular shadcn implementations:
 | **Svelte** | [shadcn-svelte](https://www.shadcn-svelte.com/) | [huntabyte](https://github.com/huntabyte) | Svelte components from shadcn-svelte |
 | **Vue** | [shadcn-vue](https://www.shadcn-vue.com/) | [unovue](https://github.com/unovue) | Vue components from shadcn-vue |
 
-## 🛠️ Essential Setup
+## 🏗️ Essential Setup
 
-### 1. Get GitHub Token (Recommended)
+### 1. Get GitHub Token (Required for Push Operations)
 ```bash
 # Visit: https://github.com/settings/tokens
-# Generate token with no scopes needed
+# Generate token with 'Contents: Write' permission for push operations
+# No scopes needed for read-only operations
 export GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_token_here
 ```
+
+**🔒 Important**: For pushing components to repositories, your GitHub token needs:
+- **Contents: Write** permission
+- Access to the target repository (fork or direct access)
+- For private repositories: appropriate repository access
 
 ### 2. Run Server
 ```bash
@@ -91,6 +99,8 @@ npx @jpisnice/shadcn-ui-mcp-server --framework vue
 - **Multi-Framework Learning** - Compare React, Svelte, and Vue implementations
 - **Rapid Prototyping** - Get complete block implementations for dashboards, forms, etc.
 - **Code Generation** - Generate component code with proper dependencies
+- **Component Contribution** - Create and push new components back to UI repositories
+- **Repository Management** - Manage component libraries through AI workflows
 
 ## 📦 Installation
 

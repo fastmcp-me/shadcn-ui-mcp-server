@@ -3,6 +3,7 @@ import { handleGetComponentDemo } from './components/get-component-demo.js';
 import { handleListComponents } from './components/list-components.js';
 import { handleGetComponentMetadata } from './components/get-component-metadata.js';
 import { handleCreateComponent } from './components/create-component.js';
+import { handlePushComponent } from './components/push-component.js';
 import { handleGetDirectoryStructure } from './repository/get-directory-structure.js';
 import { handleGetBlock } from './blocks/get-block.js';
 import { handleListBlocks } from './blocks/list-blocks.js';
@@ -12,6 +13,7 @@ import { schema as getComponentDemoSchema } from './components/get-component-dem
 import { schema as listComponentsSchema } from './components/list-components.js';
 import { schema as getComponentMetadataSchema } from './components/get-component-metadata.js';
 import { schema as createComponentSchema } from './components/create-component.js';
+import { schema as pushComponentSchema } from './components/push-component.js';
 import { schema as getDirectoryStructureSchema } from './repository/get-directory-structure.js';
 import { schema as getBlockSchema } from './blocks/get-block.js';
 import { schema as listBlocksSchema } from './blocks/list-blocks.js';
@@ -22,6 +24,7 @@ export const toolHandlers = {
   list_components: handleListComponents,
   get_component_metadata: handleGetComponentMetadata,
   create_component: handleCreateComponent,
+  push_component: handlePushComponent,
   get_directory_structure: handleGetDirectoryStructure,
   get_block: handleGetBlock,
   list_blocks: handleListBlocks
@@ -33,6 +36,7 @@ export const toolSchemas = {
   list_components: listComponentsSchema,
   get_component_metadata: getComponentMetadataSchema,
   create_component: createComponentSchema,
+  push_component: pushComponentSchema,
   get_directory_structure: getDirectoryStructureSchema,
   get_block: getBlockSchema,
   list_blocks: listBlocksSchema
@@ -81,6 +85,15 @@ export const tools = {
       type: 'object',
       properties: createComponentSchema,
       required: ['componentName']
+    }
+  },
+  'push_component': {
+    name: 'push_component',
+    description: 'Push a created component to the UI repository (requires GitHub token with write access)',
+    inputSchema: {
+      type: 'object',
+      properties: pushComponentSchema,
+      required: ['componentName', 'componentCode']
     }
   },
   'get_directory_structure': {
