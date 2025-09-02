@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>preview-test-storybook - Component Preview</title>
+    
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">preview-test-storybook Preview</h1>
+            <p class="text-gray-600">Preview and test your shadcn/ui component before pushing to repository</p>
+            <div class="flex gap-2 mt-4">
+                <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">Framework: react</span>
+                <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-sm">Mode: storybook</span>
+                <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm">Styles: Basic</span>
+            </div>
+        </div>
+
+        <!-- Component Analysis -->
+        <div class="preview-section">
+            <h2 class="text-xl font-semibold mb-4">Component Analysis</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded border">
+                    <h3 class="font-medium text-gray-900">Props Found</h3>
+                    <p class="text-2xl font-bold text-blue-600">0</p>
+                </div>
+                <div class="bg-white p-4 rounded border">
+                    <h3 class="font-medium text-gray-900">TypeScript</h3>
+                    <p class="text-2xl font-bold text-green-600">✓</p>
+                </div>
+                <div class="bg-white p-4 rounded border">
+                    <h3 class="font-medium text-gray-900">Shadcn Compliant</h3>
+                    <p class="text-2xl font-bold text-green-600">✓</p>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Live Preview -->
+        <div class="preview-section">
+            <h2 class="text-xl font-semibold mb-4">Live Preview</h2>
+            <div class="component-preview" id="component-preview">
+                <div class="text-gray-500">Loading component preview...</div>
+            </div>
+        </div>
+
+        <!-- Demo Code -->
+        
+
+        <!-- Component Source -->
+        <div class="preview-section">
+            <h2 class="text-xl font-semibold mb-4">Component Source</h2>
+            <pre class="code-block"><code></code></pre>
+        </div>
+
+        <!-- Testing Checklist -->
+        <div class="preview-section">
+            <h2 class="text-xl font-semibold mb-4">Testing Checklist</h2>
+            <div class="space-y-2">
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="rounded">
+                    <span>Component renders without errors</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="rounded">
+                    <span>Props work as expected</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="rounded">
+                    <span>Responsive design looks good</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="rounded">
+                    <span>Accessibility features work</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="rounded">
+                    <span>Dark mode compatibility (if applicable)</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="rounded">
+                    <span>Interactions work correctly</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="preview-section bg-blue-50 border-blue-200">
+            <h2 class="text-xl font-semibold mb-4 text-blue-900">Next Steps</h2>
+            <div class="space-y-2 text-blue-800">
+                <p>✅ If the component looks good and passes your tests:</p>
+                <code class="block bg-blue-100 p-2 rounded mt-2 font-mono text-sm">
+                    Use push_component tool to commit to repository
+                </code>
+                <p class="mt-4">🔄 If you need to make changes:</p>
+                <code class="block bg-blue-100 p-2 rounded mt-2 font-mono text-sm">
+                    Use create_component tool again with modifications
+                </code>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/babel">
+        // Component preview script
+        try {
+            
+    // This is a simplified preview - in a real implementation,
+    // you'd want to properly parse and render the React component
+    const previewElement = document.getElementById('component-preview');
+    previewElement.innerHTML = `
+      <div class="p-8 space-y-4">
+        <div class="bg-white p-6 rounded-lg shadow-sm border">
+          <h3 class="text-lg font-medium mb-4">Component Preview</h3>
+          <p class="text-gray-600 mb-4">This is a static preview. For full interactivity, use a proper React development environment.</p>
+          <div class="p-4 bg-gray-50 rounded border">
+            <div class="text-center text-gray-500">
+              Component would render here
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    `;
+  
+        } catch (error) {
+            document.getElementById('component-preview').innerHTML = 
+                '<div class="text-red-500">Error loading component: ' + error.message + '</div>';
+        }
+    </script>
+</body>
+</html>

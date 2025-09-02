@@ -7,7 +7,7 @@
  * It validates the tool registration and parameter handling.
  */
 
-import { tools, toolHandlers } from '../src/tools/index.js';
+import { tools, toolHandlers } from './build/tools/index.js';
 
 async function testPushComponentTool() {
     console.log('🧪 Testing push-component functionality...\n');
@@ -95,7 +95,7 @@ async function testPushComponentTool() {
     console.log('\n4. Testing framework detection...');
     try {
         // Import framework utility
-        const { getFramework, getFrameworkInfo } = await import('../src/utils/framework.js');
+        const { getFramework, getFrameworkInfo } = await import('./build/utils/framework.js');
         const currentFramework = getFramework();
         const frameworkInfo = getFrameworkInfo();
         

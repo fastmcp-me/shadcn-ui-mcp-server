@@ -99,6 +99,23 @@ export const validationSchemas = {
       .description('Whether to automatically merge the pull request')
   }),
 
+  // Component preview schemas
+  previewComponent: Joi.object({
+    componentName: Joi.string().required().min(2).max(50)
+      .pattern(/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/)
+      .message('Component name must be lowercase, start with a letter, and use hyphens only')
+      .description('Name of the component to preview'),
+    componentCode: Joi.string().required().min(50).max(100000)
+      .description('Source code of the component to preview'),
+    demoCode: Joi.string().optional().max(50000)
+      .description('Optional demo code showing component usage'),
+    previewMode: Joi.string().optional().valid('inline', 'standalone', 'storybook')
+      .default('standalone')
+      .description('Preview rendering mode'),
+    includeStyles: Joi.boolean().optional().default(true)
+      .description('Whether to include Tailwind CSS and shadcn/ui styles')
+  }),
+
   // Directory structure schemas
   directoryStructure: Joi.object({
     path: Joi.string().optional().max(500)
@@ -193,6 +210,7 @@ export function getValidationSchema(method: string): Joi.ObjectSchema | undefine
     'get_usage': validationSchemas.componentName,
     'create_component': validationSchemas.createComponent,
     'push_component': validationSchemas.pushComponent,
+    'preview_component': validationSchemas.previewComponent,
     
     // Search methods
     'search_components': validationSchemas.searchQuery,

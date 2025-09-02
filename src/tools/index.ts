@@ -4,6 +4,7 @@ import { handleListComponents } from './components/list-components.js';
 import { handleGetComponentMetadata } from './components/get-component-metadata.js';
 import { handleCreateComponent } from './components/create-component.js';
 import { handlePushComponent } from './components/push-component.js';
+import { handlePreviewComponent } from './components/preview-component.js';
 import { handleGetDirectoryStructure } from './repository/get-directory-structure.js';
 import { handleGetBlock } from './blocks/get-block.js';
 import { handleListBlocks } from './blocks/list-blocks.js';
@@ -14,6 +15,7 @@ import { schema as listComponentsSchema } from './components/list-components.js'
 import { schema as getComponentMetadataSchema } from './components/get-component-metadata.js';
 import { schema as createComponentSchema } from './components/create-component.js';
 import { schema as pushComponentSchema } from './components/push-component.js';
+import { schema as previewComponentSchema } from './components/preview-component.js';
 import { schema as getDirectoryStructureSchema } from './repository/get-directory-structure.js';
 import { schema as getBlockSchema } from './blocks/get-block.js';
 import { schema as listBlocksSchema } from './blocks/list-blocks.js';
@@ -25,6 +27,7 @@ export const toolHandlers = {
   get_component_metadata: handleGetComponentMetadata,
   create_component: handleCreateComponent,
   push_component: handlePushComponent,
+  preview_component: handlePreviewComponent,
   get_directory_structure: handleGetDirectoryStructure,
   get_block: handleGetBlock,
   list_blocks: handleListBlocks
@@ -37,6 +40,7 @@ export const toolSchemas = {
   get_component_metadata: getComponentMetadataSchema,
   create_component: createComponentSchema,
   push_component: pushComponentSchema,
+  preview_component: previewComponentSchema,
   get_directory_structure: getDirectoryStructureSchema,
   get_block: getBlockSchema,
   list_blocks: listBlocksSchema
@@ -93,6 +97,15 @@ export const tools = {
     inputSchema: {
       type: 'object',
       properties: pushComponentSchema,
+      required: ['componentName', 'componentCode']
+    }
+  },
+  'preview_component': {
+    name: 'preview_component',
+    description: 'Generate an HTML preview of a component for testing and validation before pushing',
+    inputSchema: {
+      type: 'object',
+      properties: previewComponentSchema,
       required: ['componentName', 'componentCode']
     }
   },
