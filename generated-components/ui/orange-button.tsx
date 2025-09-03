@@ -3,7 +3,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
-const cardVariants = cva(
+const orange-buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
@@ -14,18 +14,19 @@ const cardVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        outlined: "bg-muted text-muted-foreground hover:bg-muted/80",
-        elevated: "bg-muted text-muted-foreground hover:bg-muted/80"
+        orange: "bg-orange-500 text-white hover:bg-orange-600",
+        dark-orange: "bg-orange-700 text-white hover:bg-orange-800",
+        orange-outline: "border-2 border-orange-500 text-orange-500 bg-transparent hover:bg-orange-500/10",
+        orange-ghost: "bg-transparent text-orange-500 hover:bg-orange-500/10"
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
+        default: "h-10 rounded-md px-4 py-2",
+        sm: "h-9 rounded-md px-3 text-sm",
+        lg: "h-11 rounded-md px-8 text-lg",
         icon: "h-10 w-10",
-        sm: "h-9 rounded-md px-3",
-        default: "h-10 px-4 py-2",
-        lg: "h-11 rounded-md px-8"
+        sm: "h-9 rounded-md px-3 text-sm",
+        default: "h-10 rounded-md px-4 py-2",
+        lg: "h-11 rounded-md px-8 text-lg"
       },
     },
     defaultVariants: {
@@ -35,24 +36,24 @@ const cardVariants = cva(
   }
 )
 
-export interface CardProps
+export interface OrangeButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof cardVariants> {
+    VariantProps<typeof orange-buttonVariants> {
   asChild?: boolean
 }
 
-const Card = React.forwardRef<HTMLButtonElement, CardProps>(
+const OrangeButton = React.forwardRef<HTMLButtonElement, OrangeButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(cardVariants({ variant, size, className }))}
+        className={cn(orange-buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       />
     )
   }
 )
-Card.displayName = "Card"
+OrangeButton.displayName = "OrangeButton"
 
-export { Card, cardVariants }
+export { OrangeButton, orange-buttonVariants }

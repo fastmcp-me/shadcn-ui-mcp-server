@@ -329,6 +329,19 @@ async function generateDashboardHtml({
             </div>
         </div>
 
+        <!-- Server UI Components Section -->
+        <div class="glass-effect rounded-xl p-6 mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-white">Server UI Components</h2>
+                <button onclick="refreshServerComponents()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center">
+                    <i class="fas fa-sync-alt mr-2"></i>Refresh
+                </button>
+            </div>
+            <div id="serverComponentsList" class="text-blue-100">
+                <p>Click refresh to load components from server UI</p>
+            </div>
+        </div>
+
         <!-- Search and Filters -->
         <div class="glass-effect rounded-xl p-6 mb-8">
             <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
@@ -345,19 +358,19 @@ async function generateDashboardHtml({
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="filterByType('all')" class="filter-button active px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
+                    <button onclick="filterByType('all', event)" class="filter-button active px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
                         All Types
                     </button>
-                    <button onclick="filterByType('ui')" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
+                    <button onclick="filterByType('ui', event)" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
                         UI
                     </button>
-                    <button onclick="filterByType('form')" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
+                    <button onclick="filterByType('form', event)" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
                         Form
                     </button>
-                    <button onclick="filterByType('navigation')" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
+                    <button onclick="filterByType('navigation', event)" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
                         Navigation
                     </button>
-                    <button onclick="filterByCompliance('compliant')" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
+                    <button onclick="filterByCompliance('compliant', event)" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
                         <i class="fas fa-check-circle mr-1"></i>Compliant
                     </button>
                 </div>
@@ -423,26 +436,30 @@ async function generateDashboardHtml({
             }
         }
 
-        function filterByType(type) {
+        function filterByType(type, event) {
             currentFilter = type;
             
             // Update button states
             document.querySelectorAll('.filter-button').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
             filterComponents();
         }
 
-        function filterByCompliance(type) {
+        function filterByCompliance(type, event) {
             currentFilter = type;
             
             // Update button states
             document.querySelectorAll('.filter-button').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
             filterComponents();
         }
@@ -531,7 +548,7 @@ async function generateDashboardHtml({
                             <button onclick="openComponentPreview('\${component.name}')" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm transition-colors">
                                 <i class="fas fa-external-link-alt mr-1"></i>Open Preview
                             </button>
-                            <button onclick="copyPreviewPath('\${component.name}')" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg text-sm transition-colors">
+                            <button onclick="copyPreviewPath('\${component.name}', event)" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg text-sm transition-colors">
                                 <i class="fas fa-copy mr-1"></i>Copy Path
                             </button>
                         </div>
@@ -546,15 +563,17 @@ async function generateDashboardHtml({
             document.getElementById('componentModal').classList.add('hidden');
         }
 
-        function copyPreviewPath(componentName) {
+        function copyPreviewPath(componentName, event) {
             const path = \`./\${componentName}-preview.html\`;
             navigator.clipboard.writeText(path).then(() => {
                 // Show a brief success message
-                const originalText = event.target.innerHTML;
-                event.target.innerHTML = '<i class="fas fa-check mr-1"></i>Copied!';
-                setTimeout(() => {
-                    event.target.innerHTML = originalText;
-                }, 2000);
+                if (event && event.target) {
+                    const originalText = event.target.innerHTML;
+                    event.target.innerHTML = '<i class="fas fa-check mr-1"></i>Copied!';
+                    setTimeout(() => {
+                        event.target.innerHTML = originalText;
+                    }, 2000);
+                }
             });
         }
 
@@ -595,6 +614,44 @@ async function generateDashboardHtml({
         if (prefersDark) {
             document.documentElement.setAttribute('data-theme', 'dark');
             document.getElementById('theme-icon').className = 'fas fa-sun';
+        }
+
+        // Function to refresh server components
+        function refreshServerComponents() {
+            const listElement = document.getElementById('serverComponentsList');
+            listElement.innerHTML = '<p class="text-blue-200">Loading components from server UI...</p>';
+            
+            // Simulate fetching components from server
+            // In a real implementation, this would make an actual API call
+            setTimeout(() => {
+                // This is a placeholder - in a real implementation, you would fetch actual data
+                const serverComponents = [
+                    { name: 'Button', type: 'UI', status: 'Available' },
+                    { name: 'Card', type: 'Layout', status: 'Available' },
+                    { name: 'Input', type: 'Form', status: 'Available' },
+                    { name: 'Modal', type: 'UI', status: 'In Development' }
+                ];
+                
+                if (serverComponents.length > 0) {
+                    // Build the HTML string without nested template literals
+                    let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+                    serverComponents.forEach(component => {
+                        html += '<div class="glass-effect rounded-lg p-4">' +
+                                '<div class="flex justify-between items-center">' +
+                                '<h3 class="font-semibold text-white">' + component.name + '</h3>' +
+                                '<span class="px-2 py-1 rounded text-xs ' + 
+                                (component.status === 'Available' ? 'bg-green-500/30 text-green-200' : 'bg-yellow-500/30 text-yellow-200') + 
+                                '">' + component.status + '</span>' +
+                                '</div>' +
+                                '<p class="text-sm text-blue-200 mt-1">Type: ' + component.type + '</p>' +
+                                '</div>';
+                    });
+                    html += '</div>';
+                    listElement.innerHTML = html;
+                } else {
+                    listElement.innerHTML = '<p class="text-blue-200">No components found on server UI</p>';
+                }
+            }, 1000);
         }
     </script>
 </body>

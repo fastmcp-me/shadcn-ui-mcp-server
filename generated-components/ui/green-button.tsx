@@ -3,7 +3,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
-const bw-buttonVariants = cva(
+const green-buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
@@ -14,10 +14,10 @@ const bw-buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        black: "bg-black text-white hover:bg-black/90",
-        white: "bg-white text-black border border-black hover:bg-gray-100",
-        bw-outline: "border-2 border-black bg-transparent text-black hover:bg-black/5",
-        bw-ghost: "bg-transparent text-black hover:bg-black/5"
+        green: "bg-green-500 text-white hover:bg-green-600",
+        dark-green: "bg-green-700 text-white hover:bg-green-800",
+        green-outline: "border-2 border-green-500 text-green-500 bg-transparent hover:bg-green-500/10",
+        green-ghost: "bg-transparent text-green-500 hover:bg-green-500/10"
       },
       size: {
         default: "h-10 rounded-md px-4 py-2",
@@ -36,24 +36,24 @@ const bw-buttonVariants = cva(
   }
 )
 
-export interface BwButtonProps
+export interface GreenButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof bw-buttonVariants> {
+    VariantProps<typeof green-buttonVariants> {
   asChild?: boolean
 }
 
-const BwButton = React.forwardRef<HTMLButtonElement, BwButtonProps>(
+const GreenButton = React.forwardRef<HTMLButtonElement, GreenButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(bw-buttonVariants({ variant, size, className }))}
+        className={cn(green-buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       />
     )
   }
 )
-BwButton.displayName = "BwButton"
+GreenButton.displayName = "GreenButton"
 
-export { BwButton, bw-buttonVariants }
+export { GreenButton, green-buttonVariants }

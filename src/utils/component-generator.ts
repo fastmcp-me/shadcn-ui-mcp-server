@@ -143,10 +143,29 @@ export function generateComponentCode({
       : variants.size
   };
 
+  // Remove duplicates while preserving order
+  const uniqueVariants = [...new Set(finalVariants.variant)];
+  const uniqueSizes = [...new Set(finalVariants.size)];
+  
+  finalVariants.variant = uniqueVariants;
+  finalVariants.size = uniqueSizes;
+
+  // from this entry point i can add custom size and variants
   // Use custom base classes or default
   const baseClasses = customSourceStyles?.baseClasses || 
     "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
 
+  // Generate compound variants for icon sizes
+  const compoundVariants = finalVariants.variant
+    .filter(v => v !== 'default')
+    .map(v => `{
+        variant: "${v}",
+        size: "icon",
+        class: "h-10 w-10"
+      }`)
+    .join(',\n      ');
+
+  // More robust error checking in generated code
   const componentCode = `${allImports.join('\n')}
 
 const ${componentName}Variants = cva(
@@ -174,17 +193,41 @@ const ${componentName}Variants = cva(
       variant: "default",
       size: "default",
     },
+    // Enhanced quality assurance layer - validate variant and size combinations
+    compoundVariants: [
+      ${compoundVariants}
+    ]
   }
 )
 
 export interface ${pascalName}Props
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof ${componentName}Variants> {
+  /**
+   * Change the default rendered element for the one passed as a child, merging their props and behavior.
+   * @default false
+   */
   asChild?: boolean
 }
 
 const ${pascalName} = React.forwardRef<HTMLButtonElement, ${pascalName}Props>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
+    // Enhanced error checking in generated code
+    // Validate props before rendering
+    if (process.env.NODE_ENV === 'development') {
+      // Check for valid variant
+      const validVariants = [${finalVariants.variant.map(v => `"${v}"`).join(', ')}];
+      if (variant && !validVariants.includes(variant)) {
+        console.warn(\`Invalid variant "\${variant}" for ${pascalName}. Valid variants are: \${validVariants.join(', ')}\`);
+      }
+      
+      // Check for valid size
+      const validSizes = [${finalVariants.size.map(s => `"${s}"`).join(', ')}];
+      if (size && !validSizes.includes(size)) {
+        console.warn(\`Invalid size "\${size}" for ${pascalName}. Valid sizes are: \${validSizes.join(', ')}\`);
+      }
+    }
+    
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
@@ -298,22 +341,73 @@ export default function ${pascalName}Demo() {
 /**
  * Generate TypeScript interface for component props
  */
-export function generateComponentInterface(componentName: string, baseCode?: string): string {
+export function generateComponentInterface(
+  componentName: string, 
+  baseCode?: string,
+  customVariants?: string[],
+  customSizes?: string[],
+  componentType: string = 'ui'
+): string {
   const pascalName = toPascalCase(componentName);
   
-  return `export interface ${pascalName}Props
-  extends React.HTMLAttributes<HTMLDivElement> {
+  // Generate variants based on component type
+  const variantsByType = {
+    ui: {
+      variant: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+      size: ['default', 'sm', 'lg', 'icon']
+    },
+    form: {
+      variant: ['default', 'filled', 'outlined'],
+      size: ['default', 'sm', 'lg']
+    },
+    navigation: {
+      variant: ['default', 'pills', 'underline'],
+      size: ['default', 'sm', 'lg']
+    },
+    feedback: {
+      variant: ['default', 'success', 'warning', 'error'],
+      size: ['default', 'sm', 'lg']
+    },
+    layout: {
+      variant: ['default', 'bordered', 'elevated'],
+      size: ['default', 'sm', 'lg', 'xl']
+    },
+    'data-display': {
+      variant: ['default', 'bordered', 'striped'],
+      size: ['default', 'sm', 'lg']
+    }
+  };
+
+  const variants = variantsByType[componentType as keyof typeof variantsByType] || variantsByType.ui;
+  
+  // Merge custom variants if provided and remove duplicates
+  const finalVariants = {
+    variant: customVariants && customVariants.length > 0 
+      ? [...new Set([...variants.variant, ...customVariants])]
+      : variants.variant,
+    size: customSizes && customSizes.length > 0
+      ? [...new Set([...variants.size, ...customSizes])]
+      : variants.size
+  };
+
+  // Generate variant and size type literals
+  const variantTypes = finalVariants.variant.map(v => `"${v}"`).join(' | ');
+  const sizeTypes = finalVariants.size.map(s => `"${s}"`).join(' | ');
+  
+  return `import { VariantProps } from "class-variance-authority"
+
+export interface ${pascalName}Props
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof ${componentName}Variants> {
   /**
    * Change the default rendered element for the one passed as a child, merging their props and behavior.
+   * @default false
    */
   asChild?: boolean
-  /**
-   * The visual style variant of the component
-   */
-  variant?: "default" | "secondary" | "outline" | "ghost"
-  /**
-   * The size of the component
-   */
-  size?: "default" | "sm" | "lg"
-}`;
+}
+
+// Type definitions for better IntelliSense
+export type ${pascalName}Variant = ${variantTypes || '"default"'};
+export type ${pascalName}Size = ${sizeTypes || '"default"'};
+`;
 }

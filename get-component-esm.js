@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Test script for the create_component endpoint
+ * Generic Component Retrieval Script (ES Module version)
  */
 
 import { spawn } from 'child_process';
@@ -32,9 +32,9 @@ function logInfo(message) {
 }
 
 /**
- * Send MCP request to test create_component
+ * Send MCP request to get a component
  */
-async function testCreateComponent() {
+async function getComponent(componentName) {
     return new Promise((resolve, reject) => {
         const server = spawn('node', ['build/index.js'], {
             stdio: ['pipe', 'pipe', 'pipe'],
@@ -90,19 +90,15 @@ async function testCreateComponent() {
             }
         });
 
-        // Send the create component request
+        // Send the get component request
         const request = {
             jsonrpc: '2.0',
             id: 1,
             method: 'tools/call',
             params: {
-                name: 'create_component',
+                name: 'get_component',
                 arguments: {
-                    componentName: 'my-special-widget',
-                    componentType: 'ui',
-                    baseComponent: 'button',
-                    description: 'A special widget component for testing',
-                    includeDemo: true
+                    name: componentName
                 }
             }
         };
@@ -112,67 +108,46 @@ async function testCreateComponent() {
     });
 }
 
-async function runTest() {
-    log('🧪 Testing Create Component Endpoint', colors.bold);
+async function run() {
+    const componentName = process.argv[2];
+    if (!componentName) {
+        logError('Please provide a component name as an argument');
+        process.exit(1);
+    }
+
+    log(`🔍 Retrieving component: ${componentName}`, colors.bold);
     log('===================================', colors.bold);
     
     try {
-        logInfo('Testing create_component tool...');
+        logInfo('Starting MCP server and sending get_component request...');
         
-        const { response, logs } = await testCreateComponent();
-        
-        // Check if logs show YashTellis/ui repository
-        if (logs.includes('YashTellis/ui')) {
-            logSuccess('Server is configured to use YashTellis/ui repository');
-        }
+        const { response, logs } = await getComponent(componentName);
         
         if (response.result && response.result.content) {
-            logSuccess('Create component tool executed successfully');
+            logSuccess(`${componentName} component retrieved successfully!`);
             
             const content = response.result.content[0].text;
             const result = JSON.parse(content);
             
             if (result.success) {
-                logSuccess(`Component "${result.componentName}" generated successfully`);
-                logInfo(`Component type: ${result.componentType}`);
-                logInfo(`Files generated: ${Object.keys(result.files).join(', ')}`);
-                
-                // Show component file preview
-                if (result.files.component) {
-                    logInfo(`Component file: ${result.files.component.path}`);
-                    logInfo(`Component size: ${result.files.component.size} characters`);
-                    
-                    // Show first few lines of generated component
-                    const componentLines = result.files.component.content.split('\n').slice(0, 5);
-                    logInfo('Generated component preview:');
-                    componentLines.forEach(line => console.log(`  ${line}`));
-                }
-                
-                // Show demo file if generated
-                if (result.files.demo) {
-                    logInfo(`Demo file: ${result.files.demo.path}`);
-                    logInfo(`Demo size: ${result.files.demo.size} characters`);
-                }
-                
-                // Show instructions
-                logInfo('Instructions:');
-                result.instructions.forEach(instruction => console.log(`  • ${instruction}`));
-                
+                logSuccess(`Component "${result.componentName}" retrieved successfully`);
+                console.log(`Component content preview:`);
+                console.log(result.content.substring(0, 500) + '...');
             } else {
-                logError('Component generation failed');
-                logInfo(`Response: ${content.substring(0, 300)}...`);
+                logError('Component retrieval failed');
+                console.log(result);
             }
             
         } else if (response.error) {
-            logError(`Create component failed: ${JSON.stringify(response.error)}`);
+            logError(`Get component failed: ${JSON.stringify(response.error)}`);
         }
         
     } catch (error) {
-        logError(`Test failed: ${error.message}`);
+        logError(`Failed to retrieve component: ${error.message}`);
         process.exit(1);
     }
     
-    log('\n🎉 Create Component Test Completed!', colors.green + colors.bold);
+    log(`\n🎉 ${componentName} Component Retrieval Completed!`, colors.green + colors.bold);
 }
 
-runTest();
+run();

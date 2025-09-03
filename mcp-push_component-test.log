@@ -1,0 +1,59 @@
+STDOUT:
+{"jsonrpc":"2.0","id":1,"error":{"code":-32603,"message":"Failed to push component: \n\n📋 Push Requirements:\n• Component name: lowercase with hyphens only (e.g., \"custom-button\")\n• Component code: required, minimum 100 characters, maximum 50,000 characters\n• Demo code: optional, maximum 20,000 characters\n• Commit message: minimum 10 characters, maximum 200 characters\n\n❌ Validation failed: componentCode: \"componentCode\" length must be at least 100 characters long, commitMessage: \"commitMessage\" length must be at least 10 characters long"}}
+
+
+STDERR:
+INFO: Starting Shadcn UI MCP Server...
+INFO: Using default framework: 'react'
+INFO: Using default framework: 'react'
+INFO: MCP Server configured for REACT framework
+INFO: Repository: YashTellis/ui
+INFO: File extension: .tsx
+INFO: Description: React components from YashTellis/ui v4
+INFO: To switch frameworks: set FRAMEWORK=svelte|vue or use --framework svelte|vue
+INFO: Using default framework: 'react'
+WARN: No GitHub API key provided. Rate limited to 60 requests/hour.
+INFO: Setting up request handlers...
+INFO: Handlers setup complete
+INFO: Transport initialized: stdio
+INFO: Server started successfully
+ERR: Failed to push component "test-button" - Validation failed: componentCode: "componentCode" length must be at least 100 characters long, commitMessage: "commitMessage" length must be at least 10 characters long
+Stack: Error: Validation failed: componentCode: "componentCode" length must be at least 100 characters long, commitMessage: "commitMessage" length must be at least 10 characters long
+    at validateRequest (file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/utils/validation.js:167:19)
+    at validateAndSanitizeParams (file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/utils/validation.js:225:12)
+    at handlePushComponent (file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/tools/components/push-component.js:7:33)
+    at file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/server/handler.js:261:89
+    at CircuitBreaker.execute (file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/utils/circuit-breaker.js:34:34)
+    at file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/server/handler.js:261:59
+    at file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/server/handler.js:34:69
+    at CircuitBreaker.execute (file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/utils/circuit-breaker.js:34:34)
+    at handleRequest (file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/server/handler.js:34:55)
+    at file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/server/handler.js:251:22
+ERR: Error in call_tool - Failed to push component: 
+
+📋 Push Requirements:
+• Component name: lowercase with hyphens only (e.g., "custom-button")
+• Component code: required, minimum 100 characters, maximum 50,000 characters
+• Demo code: optional, maximum 20,000 characters
+• Commit message: minimum 10 characters, maximum 200 characters
+
+❌ Validation failed: componentCode: "componentCode" length must be at least 100 characters long, commitMessage: "commitMessage" length must be at least 10 characters long
+Stack: Error: Failed to push component: 
+
+📋 Push Requirements:
+• Component name: lowercase with hyphens only (e.g., "custom-button")
+• Component code: required, minimum 100 characters, maximum 50,000 characters
+• Demo code: optional, maximum 20,000 characters
+• Commit message: minimum 10 characters, maximum 200 characters
+
+❌ Validation failed: componentCode: "componentCode" length must be at least 100 characters long, commitMessage: "commitMessage" length must be at least 10 characters long
+    at handlePushComponent (file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/tools/components/push-component.js:112:15)
+    at file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/server/handler.js:261:89
+    at CircuitBreaker.execute (file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/utils/circuit-breaker.js:34:34)
+    at file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/server/handler.js:261:59
+    at file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/server/handler.js:34:69
+    at CircuitBreaker.execute (file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/utils/circuit-breaker.js:34:34)
+    at handleRequest (file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/server/handler.js:34:55)
+    at file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/build/server/handler.js:251:22
+    at file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/protocol.js:371:36
+    at file:///C:/Users/yashk/OneDrive/Desktop/Tellis/Server/shadcn-server/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/protocol.js:155:25

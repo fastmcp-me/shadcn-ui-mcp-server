@@ -71,6 +71,11 @@ export async function handleCreateComponent(params: any) {
       logWarning(`Large number of sizes (${customSizes.length}). Consider using default size scale.`);
     }
 
+    // Enhanced validation for variant duplication
+    if (patternValidation.summary.hasDuplicates) {
+      logWarning('Duplicate variants or sizes detected. These will be automatically deduplicated in the generated code.');
+    }
+
     const axios = await getAxiosImplementation();
     
     logInfo(`Generating shadcn/ui component: ${componentName} (type: ${componentType})`);
@@ -110,7 +115,13 @@ export async function handleCreateComponent(params: any) {
     });
 
     // Generate TypeScript interface for better type safety
-    const interfaceCode = generateComponentInterface(componentName, baseComponentCode);
+    const interfaceCode = generateComponentInterface(
+      componentName, 
+      baseComponentCode,
+      customVariants,
+      customSizes,
+      componentType
+    );
 
     // Generate demo code if requested
     let demoCode = '';
@@ -234,6 +245,8 @@ export async function handleCreateComponent(params: any) {
         errorMessage += 'Component name validation failed. Use lowercase, hyphens, and start with a letter.';
       } else if (error.message.includes('component type')) {
         errorMessage += 'Component type must be one of: ui, layout, form, navigation, feedback, data-display.';
+      } else if (error.message.includes('duplicate')) {
+        errorMessage += 'Duplicate variants or sizes detected. Please ensure all custom variants and sizes are unique.';
       } else {
         errorMessage += error.message;
       }

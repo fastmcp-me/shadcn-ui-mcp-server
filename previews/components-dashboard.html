@@ -156,19 +156,19 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="filterByType('all')" class="filter-button active px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
+                    <button onclick="filterByType('all', event)" class="filter-button active px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
                         All Types
                     </button>
-                    <button onclick="filterByType('ui')" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
+                    <button onclick="filterByType('ui', event)" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
                         UI
                     </button>
-                    <button onclick="filterByType('form')" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
+                    <button onclick="filterByType('form', event)" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
                         Form
                     </button>
-                    <button onclick="filterByType('navigation')" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
+                    <button onclick="filterByType('navigation', event)" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
                         Navigation
                     </button>
-                    <button onclick="filterByCompliance('compliant')" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
+                    <button onclick="filterByCompliance('compliant', event)" class="filter-button px-4 py-2 rounded-lg text-white bg-white/20 text-sm font-medium">
                         <i class="fas fa-check-circle mr-1"></i>Compliant
                     </button>
                 </div>
@@ -178,10 +178,10 @@
         <!-- Components Grid -->
         <div class="grid grid-auto-fit gap-6" id="componentsGrid">
             
-    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('dashboard-card')">
+    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('preview-test-inline')">
         <div class="flex justify-between items-start mb-4">
             <div>
-                <h3 class="text-lg font-semibold text-white mb-1">dashboard-card</h3>
+                <h3 class="text-lg font-semibold text-white mb-1">preview-test-inline</h3>
                 <span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-sm">form</span>
             </div>
             <span class="status-badge status-compliant">
@@ -197,11 +197,11 @@
             </div>
             <div class="flex justify-between">
                 <span>Demo:</span>
-                <span>✅ Available</span>
+                <span>❌ None</span>
             </div>
             <div class="flex justify-between">
                 <span>Size:</span>
-                <span>15.7KB</span>
+                <span>6.0KB</span>
             </div>
         </div>
         
@@ -209,155 +209,7 @@
             <button class="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded-lg text-sm transition-colors">
                 <i class="fas fa-eye mr-1"></i>Preview
             </button>
-            <button onclick="event.stopPropagation(); showComponentDetails('dashboard-card')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
-                <i class="fas fa-info-circle"></i>
-            </button>
-        </div>
-    </div>
-  
-    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('awesome-button-fixed')">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <h3 class="text-lg font-semibold text-white mb-1">awesome-button-fixed</h3>
-                <span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-sm">form</span>
-            </div>
-            <span class="status-badge status-compliant">
-                <i class="fas fa-check-circle"></i>
-                Compliant
-            </span>
-        </div>
-        
-        <div class="space-y-2 text-sm text-blue-100 mb-4">
-            <div class="flex justify-between">
-                <span>Created:</span>
-                <span>2/9/2025</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Demo:</span>
-                <span>✅ Available</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Size:</span>
-                <span>16.9KB</span>
-            </div>
-        </div>
-        
-        <div class="flex space-x-2">
-            <button class="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded-lg text-sm transition-colors">
-                <i class="fas fa-eye mr-1"></i>Preview
-            </button>
-            <button onclick="event.stopPropagation(); showComponentDetails('awesome-button-fixed')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
-                <i class="fas fa-info-circle"></i>
-            </button>
-        </div>
-    </div>
-  
-    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('interactive-button')">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <h3 class="text-lg font-semibold text-white mb-1">interactive-button</h3>
-                <span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-sm">form</span>
-            </div>
-            <span class="status-badge status-compliant">
-                <i class="fas fa-check-circle"></i>
-                Compliant
-            </span>
-        </div>
-        
-        <div class="space-y-2 text-sm text-blue-100 mb-4">
-            <div class="flex justify-between">
-                <span>Created:</span>
-                <span>2/9/2025</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Demo:</span>
-                <span>✅ Available</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Size:</span>
-                <span>16.7KB</span>
-            </div>
-        </div>
-        
-        <div class="flex space-x-2">
-            <button class="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded-lg text-sm transition-colors">
-                <i class="fas fa-eye mr-1"></i>Preview
-            </button>
-            <button onclick="event.stopPropagation(); showComponentDetails('interactive-button')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
-                <i class="fas fa-info-circle"></i>
-            </button>
-        </div>
-    </div>
-  
-    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('awesome-button')">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <h3 class="text-lg font-semibold text-white mb-1">awesome-button</h3>
-                <span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-sm">form</span>
-            </div>
-            <span class="status-badge status-compliant">
-                <i class="fas fa-check-circle"></i>
-                Compliant
-            </span>
-        </div>
-        
-        <div class="space-y-2 text-sm text-blue-100 mb-4">
-            <div class="flex justify-between">
-                <span>Created:</span>
-                <span>2/9/2025</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Demo:</span>
-                <span>✅ Available</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Size:</span>
-                <span>7.0KB</span>
-            </div>
-        </div>
-        
-        <div class="flex space-x-2">
-            <button class="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded-lg text-sm transition-colors">
-                <i class="fas fa-eye mr-1"></i>Preview
-            </button>
-            <button onclick="event.stopPropagation(); showComponentDetails('awesome-button')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
-                <i class="fas fa-info-circle"></i>
-            </button>
-        </div>
-    </div>
-  
-    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('demo-card')">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <h3 class="text-lg font-semibold text-white mb-1">demo-card</h3>
-                <span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-sm">form</span>
-            </div>
-            <span class="status-badge status-compliant">
-                <i class="fas fa-check-circle"></i>
-                Compliant
-            </span>
-        </div>
-        
-        <div class="space-y-2 text-sm text-blue-100 mb-4">
-            <div class="flex justify-between">
-                <span>Created:</span>
-                <span>2/9/2025</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Demo:</span>
-                <span>✅ Available</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Size:</span>
-                <span>7.0KB</span>
-            </div>
-        </div>
-        
-        <div class="flex space-x-2">
-            <button class="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded-lg text-sm transition-colors">
-                <i class="fas fa-eye mr-1"></i>Preview
-            </button>
-            <button onclick="event.stopPropagation(); showComponentDetails('demo-card')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
+            <button onclick="event.stopPropagation(); showComponentDetails('preview-test-inline')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
                 <i class="fas fa-info-circle"></i>
             </button>
         </div>
@@ -386,7 +238,7 @@
             </div>
             <div class="flex justify-between">
                 <span>Size:</span>
-                <span>5.9KB</span>
+                <span>6.0KB</span>
             </div>
         </div>
         
@@ -400,10 +252,10 @@
         </div>
     </div>
   
-    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('preview-test-inline')">
+    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('interactive-button')">
         <div class="flex justify-between items-start mb-4">
             <div>
-                <h3 class="text-lg font-semibold text-white mb-1">preview-test-inline</h3>
+                <h3 class="text-lg font-semibold text-white mb-1">interactive-button</h3>
                 <span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-sm">form</span>
             </div>
             <span class="status-badge status-compliant">
@@ -419,11 +271,11 @@
             </div>
             <div class="flex justify-between">
                 <span>Demo:</span>
-                <span>❌ None</span>
+                <span>✅ Available</span>
             </div>
             <div class="flex justify-between">
                 <span>Size:</span>
-                <span>5.9KB</span>
+                <span>17.1KB</span>
             </div>
         </div>
         
@@ -431,7 +283,7 @@
             <button class="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded-lg text-sm transition-colors">
                 <i class="fas fa-eye mr-1"></i>Preview
             </button>
-            <button onclick="event.stopPropagation(); showComponentDetails('preview-test-inline')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
+            <button onclick="event.stopPropagation(); showComponentDetails('interactive-button')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
                 <i class="fas fa-info-circle"></i>
             </button>
         </div>
@@ -460,7 +312,7 @@
             </div>
             <div class="flex justify-between">
                 <span>Size:</span>
-                <span>7.0KB</span>
+                <span>7.2KB</span>
             </div>
         </div>
         
@@ -469,6 +321,154 @@
                 <i class="fas fa-eye mr-1"></i>Preview
             </button>
             <button onclick="event.stopPropagation(); showComponentDetails('preview-test-button')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
+                <i class="fas fa-info-circle"></i>
+            </button>
+        </div>
+    </div>
+  
+    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('dashboard-card')">
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-1">dashboard-card</h3>
+                <span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-sm">form</span>
+            </div>
+            <span class="status-badge status-compliant">
+                <i class="fas fa-check-circle"></i>
+                Compliant
+            </span>
+        </div>
+        
+        <div class="space-y-2 text-sm text-blue-100 mb-4">
+            <div class="flex justify-between">
+                <span>Created:</span>
+                <span>2/9/2025</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Demo:</span>
+                <span>✅ Available</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Size:</span>
+                <span>16.1KB</span>
+            </div>
+        </div>
+        
+        <div class="flex space-x-2">
+            <button class="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded-lg text-sm transition-colors">
+                <i class="fas fa-eye mr-1"></i>Preview
+            </button>
+            <button onclick="event.stopPropagation(); showComponentDetails('dashboard-card')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
+                <i class="fas fa-info-circle"></i>
+            </button>
+        </div>
+    </div>
+  
+    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('demo-card')">
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-1">demo-card</h3>
+                <span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-sm">form</span>
+            </div>
+            <span class="status-badge status-compliant">
+                <i class="fas fa-check-circle"></i>
+                Compliant
+            </span>
+        </div>
+        
+        <div class="space-y-2 text-sm text-blue-100 mb-4">
+            <div class="flex justify-between">
+                <span>Created:</span>
+                <span>2/9/2025</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Demo:</span>
+                <span>✅ Available</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Size:</span>
+                <span>7.2KB</span>
+            </div>
+        </div>
+        
+        <div class="flex space-x-2">
+            <button class="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded-lg text-sm transition-colors">
+                <i class="fas fa-eye mr-1"></i>Preview
+            </button>
+            <button onclick="event.stopPropagation(); showComponentDetails('demo-card')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
+                <i class="fas fa-info-circle"></i>
+            </button>
+        </div>
+    </div>
+  
+    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('awesome-button')">
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-1">awesome-button</h3>
+                <span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-sm">form</span>
+            </div>
+            <span class="status-badge status-compliant">
+                <i class="fas fa-check-circle"></i>
+                Compliant
+            </span>
+        </div>
+        
+        <div class="space-y-2 text-sm text-blue-100 mb-4">
+            <div class="flex justify-between">
+                <span>Created:</span>
+                <span>2/9/2025</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Demo:</span>
+                <span>✅ Available</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Size:</span>
+                <span>7.2KB</span>
+            </div>
+        </div>
+        
+        <div class="flex space-x-2">
+            <button class="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded-lg text-sm transition-colors">
+                <i class="fas fa-eye mr-1"></i>Preview
+            </button>
+            <button onclick="event.stopPropagation(); showComponentDetails('awesome-button')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
+                <i class="fas fa-info-circle"></i>
+            </button>
+        </div>
+    </div>
+  
+    <div class="component-card glass-effect rounded-xl p-6 fade-in" onclick="openComponentPreview('awesome-button-fixed')">
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-1">awesome-button-fixed</h3>
+                <span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-sm">form</span>
+            </div>
+            <span class="status-badge status-compliant">
+                <i class="fas fa-check-circle"></i>
+                Compliant
+            </span>
+        </div>
+        
+        <div class="space-y-2 text-sm text-blue-100 mb-4">
+            <div class="flex justify-between">
+                <span>Created:</span>
+                <span>2/9/2025</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Demo:</span>
+                <span>✅ Available</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Size:</span>
+                <span>17.2KB</span>
+            </div>
+        </div>
+        
+        <div class="flex space-x-2">
+            <button class="flex-1 bg-white/20 hover:bg-white/30 text-white py-2 px-3 rounded-lg text-sm transition-colors">
+                <i class="fas fa-eye mr-1"></i>Preview
+            </button>
+            <button onclick="event.stopPropagation(); showComponentDetails('awesome-button-fixed')" class="bg-blue-500/30 hover:bg-blue-500/50 text-blue-200 py-2 px-3 rounded-lg text-sm transition-colors">
                 <i class="fas fa-info-circle"></i>
             </button>
         </div>
@@ -503,7 +503,7 @@
 
     <script>
         let currentFilter = 'all';
-        let currentComponents = [{"name":"dashboard-card","type":"form","createdAt":"2025-09-02T06:58:42.823Z","previewPath":"previews\\dashboard-card-preview.html","shadcnCompliant":true,"hasDemo":true,"size":16114},{"name":"awesome-button-fixed","type":"form","createdAt":"2025-09-02T06:53:13.675Z","previewPath":"previews\\awesome-button-fixed-preview.html","shadcnCompliant":true,"hasDemo":true,"size":17260},{"name":"interactive-button","type":"form","createdAt":"2025-09-02T06:29:52.628Z","previewPath":"previews\\interactive-button-preview.html","shadcnCompliant":true,"hasDemo":true,"size":17147},{"name":"awesome-button","type":"form","createdAt":"2025-09-02T06:24:06.737Z","previewPath":"previews\\awesome-button-preview.html","shadcnCompliant":true,"hasDemo":true,"size":7186},{"name":"demo-card","type":"form","createdAt":"2025-09-02T06:20:18.429Z","previewPath":"previews\\demo-card-preview.html","shadcnCompliant":true,"hasDemo":true,"size":7176},{"name":"preview-test-storybook","type":"form","createdAt":"2025-09-02T06:19:10.948Z","previewPath":"previews\\preview-test-storybook-preview.html","shadcnCompliant":true,"hasDemo":false,"size":6046},{"name":"preview-test-inline","type":"form","createdAt":"2025-09-02T06:19:10.945Z","previewPath":"previews\\preview-test-inline-preview.html","shadcnCompliant":true,"hasDemo":false,"size":6037},{"name":"preview-test-button","type":"form","createdAt":"2025-09-02T06:19:10.940Z","previewPath":"previews\\preview-test-button-preview.html","shadcnCompliant":true,"hasDemo":true,"size":7196}];
+        let currentComponents = [{"name":"preview-test-inline","type":"form","createdAt":"2025-09-02T12:01:48.135Z","previewPath":"previews\\preview-test-inline-preview.html","shadcnCompliant":true,"hasDemo":false,"size":6173},{"name":"preview-test-storybook","type":"form","createdAt":"2025-09-02T12:01:48.135Z","previewPath":"previews\\preview-test-storybook-preview.html","shadcnCompliant":true,"hasDemo":false,"size":6182},{"name":"interactive-button","type":"form","createdAt":"2025-09-02T12:01:48.134Z","previewPath":"previews\\interactive-button-preview.html","shadcnCompliant":true,"hasDemo":true,"size":17490},{"name":"preview-test-button","type":"form","createdAt":"2025-09-02T12:01:48.134Z","previewPath":"previews\\preview-test-button-preview.html","shadcnCompliant":true,"hasDemo":true,"size":7355},{"name":"dashboard-card","type":"form","createdAt":"2025-09-02T12:01:48.133Z","previewPath":"previews\\dashboard-card-preview.html","shadcnCompliant":true,"hasDemo":true,"size":16453},{"name":"demo-card","type":"form","createdAt":"2025-09-02T12:01:48.133Z","previewPath":"previews\\demo-card-preview.html","shadcnCompliant":true,"hasDemo":true,"size":7335},{"name":"awesome-button","type":"form","createdAt":"2025-09-02T12:01:48.131Z","previewPath":"previews\\awesome-button-preview.html","shadcnCompliant":true,"hasDemo":true,"size":7345},{"name":"awesome-button-fixed","type":"form","createdAt":"2025-09-02T12:01:48.130Z","previewPath":"previews\\awesome-button-fixed-preview.html","shadcnCompliant":true,"hasDemo":true,"size":17603}];
 
         function filterComponents() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
@@ -530,26 +530,30 @@
             }
         }
 
-        function filterByType(type) {
+        function filterByType(type, event) {
             currentFilter = type;
             
             // Update button states
             document.querySelectorAll('.filter-button').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
             filterComponents();
         }
 
-        function filterByCompliance(type) {
+        function filterByCompliance(type, event) {
             currentFilter = type;
             
             // Update button states
             document.querySelectorAll('.filter-button').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
             filterComponents();
         }
@@ -638,7 +642,7 @@
                             <button onclick="openComponentPreview('${component.name}')" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm transition-colors">
                                 <i class="fas fa-external-link-alt mr-1"></i>Open Preview
                             </button>
-                            <button onclick="copyPreviewPath('${component.name}')" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg text-sm transition-colors">
+                            <button onclick="copyPreviewPath('${component.name}', event)" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg text-sm transition-colors">
                                 <i class="fas fa-copy mr-1"></i>Copy Path
                             </button>
                         </div>
@@ -653,15 +657,17 @@
             document.getElementById('componentModal').classList.add('hidden');
         }
 
-        function copyPreviewPath(componentName) {
+        function copyPreviewPath(componentName, event) {
             const path = `./${componentName}-preview.html`;
             navigator.clipboard.writeText(path).then(() => {
                 // Show a brief success message
-                const originalText = event.target.innerHTML;
-                event.target.innerHTML = '<i class="fas fa-check mr-1"></i>Copied!';
-                setTimeout(() => {
-                    event.target.innerHTML = originalText;
-                }, 2000);
+                if (event && event.target) {
+                    const originalText = event.target.innerHTML;
+                    event.target.innerHTML = '<i class="fas fa-check mr-1"></i>Copied!';
+                    setTimeout(() => {
+                        event.target.innerHTML = originalText;
+                    }, 2000);
+                }
             });
         }
 

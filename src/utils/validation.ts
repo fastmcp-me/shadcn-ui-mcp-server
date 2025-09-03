@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi = require('joi');
 
 
 /**
@@ -316,37 +316,71 @@ export function validateShadcnUIPatterns({
     issues.push(`Component type "${componentType}" is not a valid shadcn/ui pattern. Use one of: ${validTypes.join(', ')}`);
   }
   
-  // Validate custom variants
+  // Enhanced validation for variant duplication
+  const defaultVariants = ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'];
+  const allVariants = [...defaultVariants, ...customVariants];
+  
+  // Check for duplicate variants within custom variants
+  const duplicateCustomVariants = customVariants.filter((item, index) => customVariants.indexOf(item) !== index);
+  if (duplicateCustomVariants.length > 0) {
+    issues.push(`Duplicate custom variants found: [${[...new Set(duplicateCustomVariants)].join(', ')}]`);
+  }
+  
+  // Check for conflicts between custom and default variants (only for non-ui types)
+  // For 'ui' type, 'secondary' is a valid default variant
+  let conflictingVariants = [];
+  if (componentType === 'ui') {
+    // For UI components, exclude 'secondary' from conflict check
+    const uiDefaultVariants = ['default', 'destructive', 'outline', 'ghost', 'link'];
+    conflictingVariants = customVariants.filter(v => uiDefaultVariants.includes(v));
+  } else {
+    // For other component types, check against their respective defaults
+    conflictingVariants = customVariants.filter(v => defaultVariants.includes(v));
+  }
+  
+  if (conflictingVariants.length > 0) {
+    warnings.push(`Custom variants [${conflictingVariants.join(', ')}] conflict with default variants`);
+  }
+  
+  // Validate custom variants naming conventions
   customVariants.forEach(variant => {
-    if (!/^[a-z][a-z-]*$/.test(variant)) {
-      issues.push(`Custom variant "${variant}" must be lowercase with hyphens only`);
+    if (!/^[a-z][a-z0-9-]*$/.test(variant)) {
+      issues.push(`Custom variant "${variant}" must be lowercase with hyphens only, starting with a letter`);
     }
     if (variant.length > 20) {
       warnings.push(`Custom variant "${variant}" is very long. Consider shorter names for better readability`);
     }
-  });
-  
-  // Check for duplicate variants
-  const defaultVariants = ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'];
-  const duplicateVariants = customVariants.filter(v => defaultVariants.includes(v));
-  if (duplicateVariants.length > 0) {
-    warnings.push(`Custom variants [${duplicateVariants.join(', ')}] already exist as default variants`);
-  }
-  
-  // Validate custom sizes
-  customSizes.forEach(size => {
-    if (!/^[a-z][a-z-]*$/.test(size)) {
-      issues.push(`Custom size "${size}" must be lowercase with hyphens only`);
+    if (variant.endsWith('-')) {
+      issues.push(`Custom variant "${variant}" cannot end with a hyphen`);
     }
   });
   
-  // Check for duplicate sizes
+  // Enhanced validation for size variation handling
   const defaultSizes = ['sm', 'default', 'lg', 'icon'];
-  const duplicateSizes = customSizes.filter(s => defaultSizes.includes(s));
-  if (duplicateSizes.length > 0) {
-    warnings.push(`Custom sizes [${duplicateSizes.join(', ')}] already exist as default sizes`);
+  const allSizes = [...defaultSizes, ...customSizes];
+  
+  // Check for duplicate sizes within custom sizes
+  const duplicateCustomSizes = customSizes.filter((item, index) => customSizes.indexOf(item) !== index);
+  if (duplicateCustomSizes.length > 0) {
+    issues.push(`Duplicate custom sizes found: [${[...new Set(duplicateCustomSizes)].join(', ')}]`);
   }
   
+  // Check for conflicts between custom and default sizes
+  const conflictingSizes = customSizes.filter(s => defaultSizes.includes(s));
+  if (conflictingSizes.length > 0) {
+    warnings.push(`Custom sizes [${conflictingSizes.join(', ')}] conflict with default sizes`);
+  }
+  
+  // Validate custom sizes naming conventions
+  customSizes.forEach(size => {
+    if (!/^[a-z][a-z0-9-]*$/.test(size)) {
+      issues.push(`Custom size "${size}" must be lowercase with hyphens only, starting with a letter`);
+    }
+    if (size.endsWith('-')) {
+      issues.push(`Custom size "${size}" cannot end with a hyphen`);
+    }
+  });
+
   // Performance warnings
   if (customVariants.length > 8) {
     warnings.push(`Large number of variants (${customVariants.length}) may impact bundle size and maintainability`);
@@ -355,6 +389,27 @@ export function validateShadcnUIPatterns({
   if (customSizes.length > 6) {
     warnings.push(`Large number of sizes (${customSizes.length}) may create inconsistent design scale`);
   }
+  
+  // Better naming convention enforcement for variants and sizes
+  const validateNamingConvention = (name: string, type: string) => {
+    // Check for common anti-patterns in naming
+    const antiPatterns = [
+      { pattern: /^btn-/, message: 'Avoid "btn-" prefix, use semantic names' },
+      { pattern: /^comp-/, message: 'Avoid "comp-" prefix, use descriptive names' },
+      { pattern: /[^a-z0-9-]/, message: 'Only lowercase letters, numbers, and hyphens allowed' },
+      { pattern: /--/, message: 'Double hyphens are not allowed' },
+      { pattern: /-$/, message: 'Names should not end with hyphen' }
+    ];
+    
+    antiPatterns.forEach(({ pattern, message }) => {
+      if (pattern.test(name)) {
+        warnings.push(`${type} "${name}" ${message}`);
+      }
+    });
+  };
+  
+  customVariants.forEach(variant => validateNamingConvention(variant, 'Variant'));
+  customSizes.forEach(size => validateNamingConvention(size, 'Size'));
   
   return {
     isValid: issues.length === 0,
@@ -366,7 +421,8 @@ export function validateShadcnUIPatterns({
       componentType,
       totalVariants: customVariants.length,
       totalSizes: customSizes.length,
-      hasConflicts: duplicateVariants.length > 0 || duplicateSizes.length > 0
+      hasConflicts: conflictingVariants.length > 0 || conflictingSizes.length > 0,
+      hasDuplicates: duplicateCustomVariants.length > 0 || duplicateCustomSizes.length > 0
     }
   };
 } 
