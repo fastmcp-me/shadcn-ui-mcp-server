@@ -1,7 +1,7 @@
 /**
  * Framework selection utility for shadcn/ui MCP server
  *
- * This module handles switching between React and Svelte implementations
+ * This module handles switching between React Svelte, Vue and React Native implementations
  * based on environment variables or command line arguments.
  *
  * Usage:
@@ -10,13 +10,13 @@
  * - Defaults to 'react' if not specified
  */
 
-import { logInfo, logWarning } from "./logger.js"
+import { logInfo, logWarning } from "./logger.js";
 
 // Framework types
-export type Framework = "react" | "svelte" | "vue"
+export type Framework = "react" | "svelte" | "vue" | "react-native";
 
 // Default framework
-const DEFAULT_FRAMEWORK: Framework = "react"
+const DEFAULT_FRAMEWORK: Framework = "react";
 
 /**
  * Get the current framework from environment or command line arguments
@@ -24,41 +24,43 @@ const DEFAULT_FRAMEWORK: Framework = "react"
  */
 export function getFramework(): Framework {
   // Check command line arguments first
-  const args = process.argv.slice(2)
+  const args = process.argv.slice(2);
   const frameworkIndex = args.findIndex(
     (arg) => arg === "--framework" || arg === "-f"
-  )
+  );
 
   if (frameworkIndex !== -1 && args[frameworkIndex + 1]) {
-    const framework = args[frameworkIndex + 1].toLowerCase() as Framework
+    const framework = args[frameworkIndex + 1].toLowerCase() as Framework;
     if (
       framework === "react" ||
       framework === "svelte" ||
-      framework === "vue"
+      framework === "vue" ||
+      framework === "react-native"
     ) {
-      logInfo(`Framework set to '${framework}' via command line argument`)
-      return framework
+      logInfo(`Framework set to '${framework}' via command line argument`);
+      return framework;
     } else {
       logWarning(
         `Invalid framework '${framework}' specified. Using default '${DEFAULT_FRAMEWORK}'`
-      )
+      );
     }
   }
 
   // Check environment variable
-  const envFramework = process.env.FRAMEWORK?.toLowerCase() as Framework
+  const envFramework = process.env.FRAMEWORK?.toLowerCase() as Framework;
   if (
     envFramework === "react" ||
     envFramework === "svelte" ||
-    envFramework === "vue"
+    envFramework === "vue" ||
+    envFramework === "react-native"
   ) {
-    logInfo(`Framework set to '${envFramework}' via environment variable`)
-    return envFramework
+    logInfo(`Framework set to '${envFramework}' via environment variable`);
+    return envFramework;
   }
 
   // Return default
-  logInfo(`Using default framework: '${DEFAULT_FRAMEWORK}'`)
-  return DEFAULT_FRAMEWORK
+  logInfo(`Using default framework: '${DEFAULT_FRAMEWORK}'`);
+  return DEFAULT_FRAMEWORK;
 }
 
 /**
@@ -66,17 +68,20 @@ export function getFramework(): Framework {
  * @returns The appropriate axios implementation
  */
 export async function getAxiosImplementation() {
-  const framework = getFramework()
+  const framework = getFramework();
 
   if (framework === "svelte") {
     // Dynamic import for Svelte implementation
-    return import("./axios-svelte.js").then((module) => module.axios)
+    return import("./axios-svelte.js").then((module) => module.axios);
   } else if (framework === "vue") {
     // Dynamic import for Vue implementation
-    return import("./axios-vue.js").then((module) => module.axios)
+    return import("./axios-vue.js").then((module) => module.axios);
+  } else if (framework === "react-native") {
+    // Dynamic import for React Native implementation
+    return import("./axios-react-native.js").then((module) => module.axios);
   } else {
     // Dynamic import for React implementation (default)
-    return import("./axios.js").then((module) => module.axios)
+    return import("./axios.js").then((module) => module.axios);
   }
 }
 
@@ -85,7 +90,7 @@ export async function getAxiosImplementation() {
  * @returns Framework information object
  */
 export function getFrameworkInfo() {
-  const framework = getFramework()
+  const framework = getFramework();
 
   return {
     current: framework,
@@ -94,50 +99,60 @@ export function getFrameworkInfo() {
         ? "huntabyte/shadcn-svelte"
         : framework === "vue"
         ? "unovue/shadcn-vue"
+        : framework === "react-native"
+        ? "founded-labs/react-native-reusables"
         : "shadcn-ui/ui",
     fileExtension:
       framework === "svelte"
         ? ".svelte"
         : framework === "vue"
         ? ".vue"
+        : framework === "react-native"
+        ? ".tsx"
         : ".tsx",
     description:
       framework === "svelte"
         ? "Svelte components from shadcn-svelte"
         : framework === "vue"
         ? "Vue components from shadcn-vue"
+        : framework === "react-native"
+        ? "React Native components from react-native-reusables"
         : "React components from shadcn/ui v4",
-  }
+  };
 }
 
 /**
  * Validate framework selection and provide helpful feedback
  */
 export function validateFrameworkSelection() {
-  const framework = getFramework()
-  const info = getFrameworkInfo()
+  const framework = getFramework();
+  const info = getFrameworkInfo();
 
-  logInfo(`MCP Server configured for ${framework.toUpperCase()} framework`)
-  logInfo(`Repository: ${info.repository}`)
-  logInfo(`File extension: ${info.fileExtension}`)
-  logInfo(`Description: ${info.description}`)
+  logInfo(`MCP Server configured for ${framework.toUpperCase()} framework`);
+  logInfo(`Repository: ${info.repository}`);
+  logInfo(`File extension: ${info.fileExtension}`);
+  logInfo(`Description: ${info.description}`);
 
   // Provide helpful information about switching frameworks
   if (framework === "react") {
     logInfo(
-      "To switch frameworks: set FRAMEWORK=svelte|vue or use --framework svelte|vue"
-    )
+      "To switch frameworks: set FRAMEWORK=svelte|vue|react-native or use --framework svelte|vue|react-native"
+    );
   } else if (framework === "svelte") {
     logInfo(
-      "To switch frameworks: set FRAMEWORK=react|vue or use --framework react|vue"
-    )
+      "To switch frameworks: set FRAMEWORK=react|vue|react-native or use --framework react|vue|react-native"
+    );
   } else if (framework === "vue") {
     logInfo(
-      "To switch frameworks: set FRAMEWORK=react|svelte or use --framework react|svelte"
-    )
+      "To switch frameworks: set FRAMEWORK=react|svelte|react-native or use --framework react|svelte|react-native"
+    );
+  } else if (framework === "react-native") {
+    logInfo(
+      "To switch frameworks: set FRAMEWORK=react|svelte|vue or use --framework react|svelte|vue"
+    );
   } else {
     logInfo(
-      "To switch frameworks: set FRAMEWORK=react|svelte or use --framework react|svelte"
-    )
+      "To switch frameworks: set FRAMEWORK=react|svelte|vue|react-native or use --framework react|svelte|vue|react-native"
+    );
   }
 }
