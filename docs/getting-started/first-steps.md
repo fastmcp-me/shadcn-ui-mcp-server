@@ -15,6 +15,8 @@ npx @jpisnice/shadcn-ui-mcp-server --github-api-key ghp_your_token_here
 
 # Different framework
 npx @jpisnice/shadcn-ui-mcp-server --framework svelte --github-api-key ghp_your_token_here
+npx @jpisnice/shadcn-ui-mcp-server --framework vue --github-api-key ghp_your_token_here
+npx @jpisnice/shadcn-ui-mcp-server --framework react-native --github-api-key ghp_your_token_here
 ```
 
 ### 2. Verify Server is Running
@@ -155,6 +157,14 @@ Once the server is running, you can ask your AI assistant to:
 "Show me the Vue button component"
 "Get the Vue card component demo"
 "List all Vue components available"
+```
+
+### React Native
+
+```
+"Show me the React Native button component"
+"List all React Native components available"
+"Get the React Native input component metadata"
 ```
 
 ## 🔗 Next Steps

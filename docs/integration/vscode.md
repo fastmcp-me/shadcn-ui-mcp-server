@@ -119,6 +119,27 @@ Integrate the shadcn/ui MCP Server with VS Code for seamless component access.
 }
 ```
 
+### React Native
+
+```json
+{
+  "continue.server": {
+    "mcpServers": {
+      "shadcn-ui-react-native": {
+        "command": "npx",
+        "args": [
+          "@jpisnice/shadcn-ui-mcp-server",
+          "--framework",
+          "react-native",
+          "--github-api-key",
+          "ghp_your_token_here"
+        ]
+      }
+    }
+  }
+}
+```
+
 ## 🔧 Multiple Framework Setup
 
 You can configure multiple frameworks simultaneously:
@@ -153,6 +174,16 @@ You can configure multiple frameworks simultaneously:
           "@jpisnice/shadcn-ui-mcp-server",
           "--framework",
           "vue",
+          "--github-api-key",
+          "ghp_your_token_here"
+        ]
+      },
+      "shadcn-ui-react-native": {
+        "command": "npx",
+        "args": [
+          "@jpisnice/shadcn-ui-mcp-server",
+          "--framework",
+          "react-native",
           "--github-api-key",
           "ghp_your_token_here"
         ]

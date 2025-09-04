@@ -6,7 +6,7 @@ Learn how to effectively use the shadcn/ui MCP Server with practical examples an
 
 - [Component Examples](components.md) - Working with individual components
 - [Block Examples](blocks.md) - Using complete block implementations
-- [Framework Comparison](framework-comparison.md) - Comparing React, Svelte, and Vue
+- [Framework Comparison](framework-comparison.md) - Comparing React, Svelte, Vue, and React Native
 - [Real-world Projects](real-world-projects.md) - Building complete applications
 - [Best Practices](best-practices.md) - Tips for optimal usage
 
@@ -34,6 +34,7 @@ Learn how to effectively use the shadcn/ui MCP Server with practical examples an
 
 ```
 "Compare the button component between React and Svelte"
+"Show me the React Native version of the button component"
 ```
 
 ## 🎯 Common Use Cases

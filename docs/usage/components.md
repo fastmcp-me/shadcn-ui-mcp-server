@@ -42,6 +42,14 @@ This will return the complete TypeScript source code for the button component, i
 "Show me the Vue dialog component"
 ```
 
+#### React Native
+
+```
+"Show me the React Native button component"
+"Get the React Native input component source code"
+"Show me the React Native dialog component"
+```
+
 ## 📋 Getting Component Demos
 
 ### Usage Examples
@@ -94,6 +102,7 @@ This will return the complete TypeScript source code for the button component, i
 "List all React components"
 "Show me all Svelte components"
 "List all Vue components"
+"List all React Native components"
 ```
 
 ## 🎨 Component Categories
@@ -141,6 +150,7 @@ This will return the complete TypeScript source code for the button component, i
 "Compare the button component between React and Svelte"
 "Show me the differences between React and Vue card components"
 "Compare dialog implementations across frameworks"
+"Compare React Native and React input components"
 ```
 
 ### Customization Examples

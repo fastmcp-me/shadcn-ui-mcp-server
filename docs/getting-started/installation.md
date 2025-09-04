@@ -38,13 +38,13 @@ shadcn-ui-mcp-server [options]
 
 Options:
   --github-api-key, -g <token>    GitHub Personal Access Token
-  --framework, -f <framework>     Framework to use: 'react', 'svelte' or 'vue' (default: react)
+  --framework, -f <framework>     Framework to use: 'react', 'svelte', 'vue', or 'react-native' (default: react)
   --help, -h                      Show help message
   --version, -v                   Show version information
 
 Environment Variables:
   GITHUB_PERSONAL_ACCESS_TOKEN    Alternative way to provide GitHub token
-  FRAMEWORK                       Framework to use: 'react', 'svelte' or 'vue' (default: react)
+  FRAMEWORK                       Framework to use: 'react', 'svelte', 'vue', or 'react-native' (default: react)
 
 Examples:
   npx @jpisnice/shadcn-ui-mcp-server --help
@@ -58,7 +58,7 @@ Examples:
 
 ## 🎯 Framework Selection
 
-The server supports three frameworks. See [Framework Selection](framework-selection.md) for details:
+The server supports four frameworks. See [Framework Selection](framework-selection.md) for details:
 
 ```bash
 # React (default)
@@ -69,6 +69,9 @@ npx @jpisnice/shadcn-ui-mcp-server --framework svelte
 
 # Vue
 npx @jpisnice/shadcn-ui-mcp-server --framework vue
+
+# React Native
+npx @jpisnice/shadcn-ui-mcp-server --framework react-native
 ```
 
 ## 🔑 GitHub Token Setup

@@ -4,7 +4,7 @@ Detailed configuration options for the shadcn/ui MCP Server.
 
 ## ⚙️ Configuration Options
 
-- [Framework Selection](framework-selection.md) - Choosing between React, Svelte, and Vue
+- [Framework Selection](framework-selection.md) - Choosing between React, Svelte, Vue, and React Native
 - [GitHub Token Setup](github-token-setup.md) - Setting up GitHub API access
 - [Environment Variables](environment-variables.md) - Using environment variables
 - [Command Line Options](command-line-options.md) - All available CLI options
@@ -23,6 +23,9 @@ npx @jpisnice/shadcn-ui-mcp-server --framework svelte
 
 # Vue
 npx @jpisnice/shadcn-ui-mcp-server --framework vue
+
+# React Native
+npx @jpisnice/shadcn-ui-mcp-server --framework react-native
 ```
 
 ### With GitHub Token
@@ -46,6 +49,7 @@ shadcn-ui-mcp-server [options]
 Options:
   --github-api-key, -g <token>    GitHub Personal Access Token
   --framework, -f <framework>     Framework to use: 'react', 'svelte' or 'vue' (default: react)
+                                  Also supports 'react-native'
   --help, -h                      Show help message
   --version, -v                   Show version information
 ```
@@ -60,6 +64,10 @@ export GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_token_here
 export FRAMEWORK=svelte
 
 # Run server
+npx @jpisnice/shadcn-ui-mcp-server
+
+# React Native via env var
+export FRAMEWORK=react-native
 npx @jpisnice/shadcn-ui-mcp-server
 ```
 
@@ -83,6 +91,12 @@ npx @jpisnice/shadcn-ui-mcp-server --framework svelte
 
 ```bash
 npx @jpisnice/shadcn-ui-mcp-server --framework vue
+```
+
+### React Native
+
+```bash
+npx @jpisnice/shadcn-ui-mcp-server --framework react-native
 ```
 
 ## 🔗 Next Steps

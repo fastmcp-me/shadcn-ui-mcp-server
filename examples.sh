@@ -62,6 +62,21 @@ echo "   • list_blocks           - List all available blocks"
 echo "   • get_directory_structure - Explore repository structure"
 echo ""
 
+# React Native examples
+echo "6️⃣  React Native Examples:"
+echo "   # Use React Native framework"
+echo "   npx shadcn-ui-mcp-server --framework react-native"
+echo ""
+echo "   # list_components (MCP JSON example)"
+echo '   {"tool": "list_components", "arguments": {}}'
+echo ""
+echo "   # get_component (button)"
+echo '   {"tool": "get_component", "arguments": {"componentName": "button"}}'
+echo ""
+echo "   # get_component_metadata (input)"
+echo '   {"tool": "get_component_metadata", "arguments": {"componentName": "input"}}'
+echo ""
+
 echo "📚 For more information:"
 echo "   npx shadcn-ui-mcp-server --help"
 echo "   https://github.com/yourusername/shadcn-ui-mcp-server"

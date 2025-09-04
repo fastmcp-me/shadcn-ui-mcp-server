@@ -114,6 +114,14 @@ This will return:
 "Get the Vue login-02 block"
 ```
 
+#### React Native
+
+```
+"List blocks for React Native"
+```
+
+Note: Blocks are currently not available for React Native. The tools return an informative message instead of failing.
+
 ## 💡 Practical Block Examples
 
 ### Building a Dashboard
