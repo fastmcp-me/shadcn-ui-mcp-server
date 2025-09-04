@@ -7,11 +7,11 @@
 
 > **🚀 The fastest way to integrate shadcn/ui components into your AI workflow**
 
-A Model Context Protocol (MCP) server that provides AI assistants with comprehensive access to [shadcn/ui v4](https://ui.shadcn.com/) components, blocks, demos, and metadata. Seamlessly retrieve React, Svelte, and Vue implementations for your AI-powered development workflow.
+A Model Context Protocol (MCP) server that provides AI assistants with comprehensive access to [shadcn/ui v4](https://ui.shadcn.com/) components, blocks, demos, and metadata. Seamlessly retrieve React, Svelte, Vue, and React Native implementations for your AI-powered development workflow.
 
 ## ✨ Key Features
 
-- **🎯 Multi-Framework Support** - React, Svelte, and Vue implementations
+- **🎯 Multi-Framework Support** - React, Svelte, Vue, and React Native implementations
 - **📦 Component Source Code** - Latest shadcn/ui v4 TypeScript source
 - **🎨 Component Demos** - Example implementations and usage patterns  
 - **🏗️ Blocks Support** - Complete block implementations (dashboards, calendars, forms)
@@ -31,6 +31,7 @@ npx @jpisnice/shadcn-ui-mcp-server --github-api-key ghp_your_token_here
 # Switch frameworks
 npx @jpisnice/shadcn-ui-mcp-server --framework svelte
 npx @jpisnice/shadcn-ui-mcp-server --framework vue
+npx @jpisnice/shadcn-ui-mcp-server --framework react-native
 ```
 
 **🎯 Get your GitHub token in 2 minutes**: [docs/getting-started/github-token.md](docs/getting-started/github-token.md)
@@ -49,13 +50,14 @@ npx @jpisnice/shadcn-ui-mcp-server --framework vue
 
 ## 🎨 Framework Support
 
-This MCP server supports three popular shadcn implementations:
+This MCP server supports four popular shadcn implementations:
 
 | Framework | Repository | Maintainer | Description |
 |-----------|------------|------------|-------------|
 | **React** (default) | [shadcn/ui](https://ui.shadcn.com/) | [shadcn](https://github.com/shadcn) | React components from shadcn/ui v4 |
 | **Svelte** | [shadcn-svelte](https://www.shadcn-svelte.com/) | [huntabyte](https://github.com/huntabyte) | Svelte components from shadcn-svelte |
 | **Vue** | [shadcn-vue](https://www.shadcn-vue.com/) | [unovue](https://github.com/unovue) | Vue components from shadcn-vue |
+| **React Native** | [react-native-reusables](https://github.com/founded-labs/react-native-reusables) | [Founded Labs](https://github.com/founded-labs) | React Native components from react-native-reusables |
 
 ## 🛠️ Essential Setup
 
@@ -76,6 +78,9 @@ npx @jpisnice/shadcn-ui-mcp-server --framework svelte
 
 # Vue  
 npx @jpisnice/shadcn-ui-mcp-server --framework vue
+
+# React Native
+npx @jpisnice/shadcn-ui-mcp-server --framework react-native
 ```
 
 ### 3. Integrate with Your Editor
@@ -88,7 +93,7 @@ npx @jpisnice/shadcn-ui-mcp-server --framework vue
 
 - **AI-Powered Development** - Let AI assistants build UIs with shadcn/ui
 - **Component Discovery** - Explore available components and their usage
-- **Multi-Framework Learning** - Compare React, Svelte, and Vue implementations
+- **Multi-Framework Learning** - Compare React, Svelte, Vue, and React Native implementations
 - **Rapid Prototyping** - Get complete block implementations for dashboards, forms, etc.
 - **Code Generation** - Generate component code with proper dependencies
 
@@ -120,6 +125,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 - **[shadcn](https://github.com/shadcn)** - For the amazing React UI component library
 - **[huntabyte](https://github.com/huntabyte)** - For the excellent Svelte implementation
 - **[unovue](https://github.com/unovue)** - For the comprehensive Vue implementation
+- **[Founded Labs](https://github.com/founded-labs)** - For the React Native implementation
 - **[Anthropic](https://anthropic.com)** - For the Model Context Protocol specification
 
 ---

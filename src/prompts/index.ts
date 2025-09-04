@@ -4,6 +4,27 @@ import {
   getPageTypeSpecificInstructions,
 } from "./helpers.js"
 
+// Small helper to append React Native specific notes to prompts when needed
+function getReactNativeNotes(context: "general" | "page" | "dashboard" | "auth" | "datatable"): string {
+  const base = `\n\nREACT NATIVE NOTES:\n- Use React Native primitives (View, Text, Pressable, Image) — no DOM/HTML.\n- Style with NativeWind (className) or StyleSheet.create; avoid web CSS.\n- Prefer FlatList/SectionList for lists; implement virtualization/windowing.\n- Use accessibility props (accessibilityLabel, accessibilityRole, accessibilityHint) instead of ARIA.\n- For animations use react-native-reanimated; for gestures use react-native-gesture-handler.\n- Consider SafeAreaView and Platform checks for iOS/Android differences.`
+
+  const extras: Record<typeof context, string> = {
+    general: base,
+    page: base,
+    dashboard:
+      base +
+      `\n- Build grids with Flexbox styles; there is no CSS Grid.\n- Use RN-friendly chart libs (e.g., victory-native, react-native-svg + d3).\n- Data widgets often render as lists/cards rather than HTML tables.`,
+    auth:
+      base +
+      `\n- Use TextInput with secureTextEntry for passwords; manage keyboard overlaps with KeyboardAvoidingView.\n- Consider react-hook-form with a RN resolver or controlled inputs.\n- Deep linking/redirects for OAuth providers may require additional setup.`,
+    datatable:
+      base +
+      `\n- RN does not have native HTML tables; implement a DataTable with FlatList/FlashList.\n- Use item separators and row components; handle large datasets with virtualization.\n- For row actions, use Pressable/Swipeable patterns and action sheets.`,
+  }
+
+  return extras[context]
+}
+
 /**
  * List of prompts metadata available in this MCP server
  * Each prompt must have a name, description, and arguments if parameters are needed
@@ -163,7 +184,7 @@ INSTRUCTIONS:
 
 2. Build the page following these principles:
    - Use shadcn/ui v4 components and blocks as building blocks
-   - Ensure responsive design with Tailwind CSS classes
+   - Ensure responsive design (${framework === "react-native" ? "use NativeWind or StyleSheet" : "use Tailwind CSS classes"})
    - Implement proper TypeScript types
    - Follow ${framework} best practices and conventions
    - Include proper accessibility attributes
@@ -183,6 +204,8 @@ INSTRUCTIONS:
    - Implement ${style} design principles
    - Ensure dark/light mode compatibility
    - Use shadcn/ui design tokens
+
+${getFramework() === "react-native" ? getReactNativeNotes("page") : ""}
 
 Please provide complete, production-ready ${framework} code with proper imports and TypeScript types.`,
           },
@@ -252,6 +275,8 @@ INSTRUCTIONS:
    - Keyboard navigation support
    - Screen reader compatibility
    - Color contrast compliance
+
+${getFramework() === "react-native" ? getReactNativeNotes("dashboard") : ""}
 
 Provide complete ${framework} code with all necessary imports, types, and implementations.`,
           },
@@ -333,6 +358,8 @@ INSTRUCTIONS:
    - Center-aligned forms with proper spacing
    - Background images or gradients (optional)
    - Responsive design for all screen sizes
+
+${getFramework() === "react-native" ? getReactNativeNotes("auth") : ""}
 
 Provide complete ${framework} authentication flow code with proper TypeScript types, validation, and error handling.`,
           },
@@ -488,6 +515,8 @@ INSTRUCTIONS:
    - Export functionality (CSV, JSON)
    - Bulk operations
    - Virtual scrolling for large datasets (if needed)
+
+${getFramework() === "react-native" ? getReactNativeNotes("datatable") : ""}
 
 Provide complete ${framework} data table implementation with proper TypeScript types, mock data, and usage examples.`,
           },
