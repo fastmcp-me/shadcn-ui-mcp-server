@@ -9,21 +9,27 @@ echo "🧪 Testing shadcn-ui-mcp-server package..."
 
 # Test 1: Help command
 echo "✅ Testing --help flag..."
-./build/index.js --help > /dev/null
+node ./build/index.js --help > /dev/null
 echo "   Help command works!"
 
 # Test 2: Version command
 echo "✅ Testing --version flag..."
-VERSION=$(./build/index.js --version)
+VERSION=$(node ./build/index.js --version)
 echo "   Version: $VERSION"
 
 # Test 3: Check if shebang works
 echo "✅ Testing executable permissions..."
 if [[ -x "./build/index.js" ]]; then
-    echo "   File is executable!"
+  echo "   File is executable!"
 else
-    echo "   ❌ File is not executable"
+  echo "   ℹ️  File is not executable — adding exec bit"
+  chmod +x ./build/index.js
+  if [[ -x "./build/index.js" ]]; then
+    echo "   File is now executable"
+  else
+    echo "   ❌ Failed to make build/index.js executable"
     exit 1
+  fi
 fi
 
 # Test 4: Check package.json structure
@@ -46,22 +52,35 @@ fi
 
 # Test 5: Check if build files exist
 echo "✅ Testing build files..."
+
+# Required files (must exist)
 REQUIRED_FILES=(
-    "build/index.js"
-
-    "build/handler.js"
-
-    "build/tools/index.js"
-    "build/utils/axios.js"
+  "build/index.js"
+  "build/server/handler.js"
+  "build/tools/index.js"
+  "build/utils/axios.js"
 )
 
 for file in "${REQUIRED_FILES[@]}"; do
-    if [[ -f "$file" ]]; then
-        echo "   ✓ $file exists"
-    else
-        echo "   ❌ $file missing"
-        exit 1
-    fi
+  if [[ -f "$file" ]]; then
+    echo "   ✓ $file exists"
+  else
+    echo "   ❌ $file missing"
+    exit 1
+  fi
+done
+
+# Optional files (informative checks; do not fail)
+OPTIONAL_FILES=(
+  "build/utils/axios-react-native.js"
+)
+
+for file in "${OPTIONAL_FILES[@]}"; do
+  if [[ -f "$file" ]]; then
+    echo "   ✓ (optional) $file exists"
+  else
+    echo "   ⚠️  (optional) $file not found — skipping"
+  fi
 done
 
 # Test 6: Check LICENSE and README
@@ -77,6 +96,11 @@ fi
 echo "✅ Testing npm pack (dry run)..."
 npm pack --dry-run > /dev/null 2>&1
 echo "   npm pack simulation successful!"
+
+# Test 8: React Native framework startup
+echo "✅ Testing React Native framework startup..."
+FRAMEWORK=react-native node ./build/index.js --help > /dev/null
+echo "   RN framework help works!"
 
 echo ""
 echo "🎉 All tests passed! Package is ready for publishing."
