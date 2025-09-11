@@ -124,36 +124,6 @@ export const capabilities = {
         required: ["componentName"],
       },
     },
-    create_component: {
-      description: "Create a new shadcn/ui component following existing patterns and conventions",
-      inputSchema: {
-        type: "object",
-        properties: {
-          componentName: {
-            type: "string",
-            description: 'Name of the component to create (e.g., "custom-button", "my-card")',
-          },
-          componentType: {
-            type: "string",
-            description: 'Type of component to create (default: "ui")',
-            enum: ["ui", "layout", "form", "navigation", "feedback", "data-display"]
-          },
-          baseComponent: {
-            type: "string",
-            description: 'Existing component to use as a reference/template (default: "button")'
-          },
-          description: {
-            type: "string",
-            description: "Description of what the component does"
-          },
-          includeDemo: {
-            type: "boolean",
-            description: "Whether to generate a demo file for the component (default: true)"
-          }
-        },
-        required: ["componentName"],
-      },
-    },
     get_directory_structure: {
       description:
         "Get the directory structure of the shadcn-ui v4 repository",

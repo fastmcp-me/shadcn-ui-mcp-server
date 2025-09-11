@@ -2,7 +2,7 @@ import { Axios } from "axios";
 import { logError, logWarning, logInfo } from './logger.js';
 
 // Constants for the v4 repository structure
-const REPO_OWNER = 'YashTellis';
+const REPO_OWNER = 'shadcn-ui';
 const REPO_NAME = 'ui';
 const REPO_BRANCH = 'main';
 const V4_BASE_PATH = 'apps/v4';
@@ -836,185 +836,6 @@ async function getGitHubRateLimit(): Promise<any> {
     }
 }
 
-/**
- * Push component to the React repository
- * @param params Component push parameters
- * @returns Promise with push result
- */
-async function pushComponentToRepository(params: {
-    componentName: string;
-    files: Array<{
-        type: 'component' | 'demo';
-        content: string;
-        name: string;
-    }>;
-    commitMessage: string;
-    branch?: string;
-    createPullRequest?: boolean;
-    autoMerge?: boolean;
-}): Promise<any> {
-    const { componentName, files, commitMessage, branch = REPO_BRANCH, createPullRequest = true, autoMerge = false } = params;
-    
-    // Validate GitHub token is present
-    if (!process.env.GITHUB_PERSONAL_ACCESS_TOKEN) {
-        throw new Error('GitHub Personal Access Token is required for pushing components. Please set GITHUB_PERSONAL_ACCESS_TOKEN environment variable.');
-    }
-    
-    try {
-        const filesToPush = [];
-        
-        for (const file of files) {
-            let filePath: string;
-            let fileExtension: string = '.tsx';
-            
-            if (file.type === 'component') {
-                filePath = `${NEW_YORK_V4_PATH}/ui/${componentName.toLowerCase()}${fileExtension}`;
-            } else if (file.type === 'demo') {
-                filePath = `${NEW_YORK_V4_PATH}/examples/${componentName.toLowerCase()}-demo${fileExtension}`;
-            } else {
-                throw new Error(`Unknown file type: ${file.type}`);
-            }
-            
-            // Check if file already exists to get SHA for updates
-            let sha: string | undefined;
-            try {
-                const existingFile = await githubApi.get(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}?ref=${branch}`);
-                sha = existingFile.data.sha;
-                logInfo(`File ${filePath} exists, will update`);
-            } catch (error: any) {
-                if (error.response?.status !== 404) {
-                    throw error;
-                }
-                logInfo(`File ${filePath} does not exist, will create`);
-            }
-            
-            filesToPush.push({
-                path: filePath,
-                content: Buffer.from(file.content).toString('base64'),
-                sha,
-                size: file.content.length
-            });
-        }
-        
-        // If creating a pull request, we need to work on a new branch
-        let targetBranch = branch;
-        if (createPullRequest) {
-            const branchName = `add-${componentName}-component-${Date.now()}`;
-            
-            // Get the latest commit SHA from the base branch
-            const baseBranchRef = await githubApi.get(`/repos/${REPO_OWNER}/${REPO_NAME}/git/ref/heads/${branch}`);
-            const baseSha = baseBranchRef.data.object.sha;
-            
-            // Create new branch
-            await githubApi.post(`/repos/${REPO_OWNER}/${REPO_NAME}/git/refs`, JSON.stringify({
-                ref: `refs/heads/${branchName}`,
-                sha: baseSha
-            }));
-            
-            targetBranch = branchName;
-            logInfo(`Created branch: ${branchName}`);
-        }
-        
-        // Push each file
-        const pushedFiles = [];
-        for (const file of filesToPush) {
-            const pushData: any = {
-                message: `${commitMessage} - ${file.path.split('/').pop()}`,
-                content: file.content,
-                branch: targetBranch
-            };
-            
-            if (file.sha) {
-                pushData.sha = file.sha;
-            }
-            
-            const response = await githubApi.put(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file.path}`, JSON.stringify(pushData));
-            
-            pushedFiles.push({
-                path: file.path,
-                sha: response.data.content.sha,
-                size: file.size,
-                url: response.data.content.html_url
-            });
-        }
-        
-        const result: any = {
-            repository: `${REPO_OWNER}/${REPO_NAME}`,
-            branch: targetBranch,
-            files: pushedFiles,
-            commitSha: pushedFiles[0]?.sha // Use first file's commit SHA
-        };
-        
-        // Create pull request if requested
-        if (createPullRequest && targetBranch !== branch) {
-            const prData = {
-                title: `Add ${componentName} component`,
-                head: targetBranch,
-                base: branch,
-                body: `${commitMessage}\n\nThis PR adds the ${componentName} component to the React registry.\n\nFiles added/updated:\n${pushedFiles.map(f => `- ${f.path}`).join('\n')}`
-            };
-            
-            const prResponse = await githubApi.post(`/repos/${REPO_OWNER}/${REPO_NAME}/pulls`, JSON.stringify(prData));
-            
-            result.pullRequest = {
-                number: prResponse.data.number,
-                url: prResponse.data.html_url,
-                title: prResponse.data.title,
-                autoMerged: false
-            };
-            
-            logInfo(`Created pull request: #${prResponse.data.number}`);
-            
-            // Auto-merge if requested
-            if (autoMerge) {
-                try {
-                    // Enable auto-merge on the pull request
-                    const autoMergeData = {
-                        merge_method: 'squash' // Use squash merge for cleaner history
-                    };
-                    
-                    await githubApi.put(`/repos/${REPO_OWNER}/${REPO_NAME}/pulls/${prResponse.data.number}/merge`, JSON.stringify({
-                        commit_title: `${prData.title} (#${prResponse.data.number})`,
-                        commit_message: prData.body,
-                        merge_method: 'squash'
-                    }));
-                    
-                    result.pullRequest.autoMerged = true;
-                    logInfo(`Auto-merged pull request: #${prResponse.data.number}`);
-                } catch (mergeError: any) {
-                    logError(`Failed to auto-merge pull request #${prResponse.data.number}`, mergeError);
-                    
-                    // Don't fail the entire operation if auto-merge fails
-                    result.pullRequest.autoMergeError = mergeError.response?.data?.message || mergeError.message;
-                    logInfo('Pull request created successfully but auto-merge failed. Manual review may be required.');
-                }
-            }
-        }
-        
-        return result;
-        
-    } catch (error: any) {
-        logError('Failed to push component to repository', error);
-        
-        if (error.response) {
-            const status = error.response.status;
-            const message = error.response.data?.message || 'Unknown error';
-            
-            if (status === 401) {
-                throw new Error('Authentication failed. Please check your GITHUB_PERSONAL_ACCESS_TOKEN.');
-            } else if (status === 403) {
-                throw new Error(`Permission denied. Make sure your GitHub token has write access to ${REPO_OWNER}/${REPO_NAME}. Error: ${message}`);
-            } else if (status === 404) {
-                throw new Error(`Repository ${REPO_OWNER}/${REPO_NAME} not found or branch ${branch} does not exist.`);
-            } else {
-                throw new Error(`GitHub API error (${status}): ${message}`);
-            }
-        }
-        
-        throw error;
-    }
-}
-
 export const axios = {
     githubRaw,
     githubApi,
@@ -1028,7 +849,6 @@ export const axios = {
     getAvailableBlocks,
     setGitHubApiKey,
     getGitHubRateLimit,
-    pushComponentToRepository,
     // Path constants for easy access
     paths: {
         REPO_OWNER,
