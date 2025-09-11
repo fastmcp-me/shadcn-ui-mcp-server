@@ -72,10 +72,11 @@ Complete reference for the shadcn/ui MCP Server tools and capabilities.
 
 ## 🎨 Framework Support
 
-All tools support three frameworks:
+All tools support four frameworks:
 - **React** (default) - shadcn/ui v4
 - **Svelte** - shadcn-svelte
 - **Vue** - shadcn-vue
+- **React Native** - react-native-reusables
 
 ## 🔗 Next Steps
 

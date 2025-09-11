@@ -102,6 +102,25 @@ Create a `.cursorrules` file in your project root:
 }
 ```
 
+### React Native
+
+```json
+{
+  "mcpServers": {
+    "shadcn-ui-react-native": {
+      "command": "npx",
+      "args": [
+        "@jpisnice/shadcn-ui-mcp-server",
+        "--framework",
+        "react-native",
+        "--github-api-key",
+        "ghp_your_token_here"
+      ]
+    }
+  }
+}
+```
+
 ## 🔧 Multiple Framework Setup
 
 Configure multiple frameworks for comparison:
@@ -135,6 +154,16 @@ Configure multiple frameworks for comparison:
         "@jpisnice/shadcn-ui-mcp-server",
         "--framework",
         "vue",
+        "--github-api-key",
+        "ghp_your_token_here"
+      ]
+    },
+    "shadcn-ui-react-native": {
+      "command": "npx",
+      "args": [
+        "@jpisnice/shadcn-ui-mcp-server",
+        "--framework",
+        "react-native",
         "--github-api-key",
         "ghp_your_token_here"
       ]

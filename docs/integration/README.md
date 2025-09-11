@@ -36,7 +36,7 @@ See [Claude Desktop Integration](claude-desktop.md) for details.
 - **Get component demos** and usage examples
 - **Retrieve complete blocks** (dashboards, forms, etc.)
 - **Explore repository structure** without leaving your tool
-- **Compare framework implementations** (React, Svelte, Vue)
+- **Compare framework implementations** (React, Svelte, Vue, React Native)
 
 ## 🔧 Common Configuration
 
@@ -62,6 +62,19 @@ For different frameworks:
     "@jpisnice/shadcn-ui-mcp-server",
     "--framework",
     "svelte",
+    "--github-api-key",
+    "ghp_your_token_here"
+  ]
+}
+```
+
+```json
+{
+  "command": "npx",
+  "args": [
+    "@jpisnice/shadcn-ui-mcp-server",
+    "--framework",
+    "react-native",
     "--github-api-key",
     "ghp_your_token_here"
   ]

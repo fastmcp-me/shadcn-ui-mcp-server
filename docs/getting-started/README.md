@@ -7,7 +7,7 @@ Welcome to the shadcn/ui MCP Server! This section will help you get up and runni
 - [Installation](installation.md) - How to install and run the server
 - [GitHub Token Setup](github-token.md) - Setting up GitHub API access
 - [First Steps](first-steps.md) - Your first component request
-- [Framework Selection](framework-selection.md) - Choosing between React, Svelte, and Vue
+- [Framework Selection](framework-selection.md) - Choosing between React, Svelte, Vue, and React Native
 
 ## 🚀 Quick Start (5 minutes)
 

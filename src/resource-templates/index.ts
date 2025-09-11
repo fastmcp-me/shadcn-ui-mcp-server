@@ -5,7 +5,7 @@
  * resources based on parameters in the URI.
  */
 
-import { getFramework } from "../utils/framework.js"
+import { getFramework } from "../utils/framework.js";
 
 /**
  * Resource template definitions exported to the MCP handler
@@ -28,13 +28,13 @@ export const resourceTemplates = [
       "resource-template:get_installation_guide?buildTool={buildTool}&packageManager={packageManager}",
     contentType: "text/plain",
   },
-]
+];
 
 // Create a map for easier access in getResourceTemplate
 const resourceTemplateMap = {
   get_install_script_for_component: resourceTemplates[0],
   get_installation_guide: resourceTemplates[1],
-}
+};
 
 /**
  * Extract parameters from URI
@@ -43,8 +43,8 @@ const resourceTemplateMap = {
  * @returns Parameter value or undefined
  */
 function extractParam(uri: string, paramName: string): string | undefined {
-  const match = uri.match(new RegExp(`${paramName}=([^&]+)`))
-  return match?.[1]
+  const match = uri.match(new RegExp(`${paramName}=([^&]+)`));
+  return match?.[1];
 }
 
 /**
@@ -57,15 +57,15 @@ export const getResourceTemplate = (uri: string) => {
   if (uri.startsWith("resource-template:get_install_script_for_component")) {
     return async () => {
       try {
-        const packageManager = extractParam(uri, "packageManager")
-        const component = extractParam(uri, "component")
+        const packageManager = extractParam(uri, "packageManager");
+        const component = extractParam(uri, "component");
 
         if (!packageManager) {
           return {
             content:
               "Missing packageManager parameter. Please specify npm, pnpm, or yarn.",
             contentType: "text/plain",
-          }
+          };
         }
 
         if (!component) {
@@ -73,71 +73,71 @@ export const getResourceTemplate = (uri: string) => {
             content:
               "Missing component parameter. Please specify the component name.",
             contentType: "text/plain",
-          }
+          };
         }
 
         // Get current framework and determine package name
-        const framework = getFramework()
-        let packageName: string
+        const framework = getFramework();
+        let packageName: string;
         switch (framework) {
           case "svelte":
-            packageName = "shadcn-svelte"
-            break
+            packageName = "shadcn-svelte";
+            break;
           case "vue":
-            packageName = "shadcn-vue"
-            break
+            packageName = "shadcn-vue";
+            break;
           case "react":
-            packageName = "shadcn"
-            break
+            packageName = "shadcn";
+            break;
           default:
-            packageName = "shadcn"
-            break
+            packageName = "shadcn";
+            break;
         }
 
         // Generate installation script based on package manager
-        let installCommand: string
+        let installCommand: string;
 
         switch (packageManager.toLowerCase()) {
           case "npm":
-            installCommand = `npx ${packageName}@latest add ${component} --yes --overwrite`
-            break
+            installCommand = `npx ${packageName}@latest add ${component} --yes --overwrite`;
+            break;
           case "pnpm":
-            installCommand = `pnpm dlx ${packageName}@latest add ${component} --yes --overwrite`
-            break
+            installCommand = `pnpm dlx ${packageName}@latest add ${component} --yes --overwrite`;
+            break;
           case "yarn":
-            installCommand = `yarn dlx ${packageName}@latest add ${component} --yes --overwrite`
-            break
+            installCommand = `yarn dlx ${packageName}@latest add ${component} --yes --overwrite`;
+            break;
           case "bun":
-            installCommand = `bunx --bun ${packageName}@latest add ${component} --yes --overwrite`
-            break
+            installCommand = `bunx --bun ${packageName}@latest add ${component} --yes --overwrite`;
+            break;
           default:
-            installCommand = `npx ${packageName}@latest add ${component} --yes --overwrite`
+            installCommand = `npx ${packageName}@latest add ${component} --yes --overwrite`;
         }
 
         return {
           content: installCommand,
           contentType: "text/plain",
-        }
+        };
       } catch (error) {
         return {
           content: `Error generating installation script: ${
             error instanceof Error ? error.message : String(error)
           }`,
           contentType: "text/plain",
-        }
+        };
       }
-    }
+    };
   }
 
   // Installation guide template
   if (uri.startsWith("resource-template:get_installation_guide")) {
     return async () => {
       try {
-        const buildTool = extractParam(uri, "buildTool")
-        const packageManager = extractParam(uri, "packageManager")
+        const buildTool = extractParam(uri, "buildTool");
+        const packageManager = extractParam(uri, "packageManager");
 
         // Get current framework first since it's used in validation
-        const currentFramework = getFramework()
+        const currentFramework = getFramework();
 
         if (!buildTool) {
           return {
@@ -146,7 +146,7 @@ export const getResourceTemplate = (uri: string) => {
                 ? "Missing buildTool parameter. Available option: vite"
                 : "Missing buildTool parameter. Please specify next, vite, remix, etc.",
             contentType: "text/plain",
-          }
+          };
         }
 
         // Validate build tool for Svelte
@@ -157,7 +157,7 @@ export const getResourceTemplate = (uri: string) => {
           return {
             content: 'Invalid build tool for Svelte. Only "vite" is supported.',
             contentType: "text/plain",
-          }
+          };
         }
 
         if (!packageManager) {
@@ -165,27 +165,30 @@ export const getResourceTemplate = (uri: string) => {
             content:
               "Missing packageManager parameter. Please specify npm, pnpm, or yarn.",
             contentType: "text/plain",
-          }
+          };
         }
 
         // Determine package name
-        let packageName:any
+        let packageName: any;
         switch (currentFramework) {
           case "svelte":
-            packageName = "shadcn-svelte"
-            break
+            packageName = "shadcn-svelte";
+            break;
           case "vue":
-            packageName = "shadcn-vue"
-            break
+            packageName = "shadcn-vue";
+            break;
           case "react":
-            packageName = "shadcn-ui"
-            break
+            packageName = "shadcn-ui";
+            break;
+          case "react-native":
+            packageName = "@react-native-reusables/cli";
+            break;
           default:
-            packageName = "shadcn-ui"
-            break
+            packageName = "shadcn-ui";
+            break;
         }
         // Generate installation guide based on build tool and package manager
-        let guides:any
+        let guides: any;
         switch (currentFramework) {
           case "svelte": {
             guides = {
@@ -290,8 +293,8 @@ export const getResourceTemplate = (uri: string) => {
                   "Now you can use the component in your project!",
                 ],
               },
-            }
-            break
+            };
+            break;
           }
           case "react":
             guides = {
@@ -461,8 +464,78 @@ export const getResourceTemplate = (uri: string) => {
                   "Now you can use the component in your project!",
                 ],
               },
-            }
-            break
+            };
+            break;
+          case "react-native":
+            guides = {
+              expo: {
+                description: "Installation guide for React Native with Expo",
+                steps: [
+                  "Create a new Expo project if you don't have one already:",
+                  `${packageManager} create expo-app my-app`,
+                  "",
+                  "Navigate to your project directory:",
+                  "cd my-app",
+                  "",
+                  "Install NativeWind for Tailwind CSS support:",
+                  packageManager === "npm"
+                    ? `npm install nativewind tailwindcss`
+                    : packageManager === "pnpm"
+                    ? `pnpm add nativewind tailwindcss`
+                    : packageManager === "yarn"
+                    ? `yarn add nativewind tailwindcss`
+                    : packageManager === "bun"
+                    ? `bun add nativewind tailwindcss`
+                    : `npm install nativewind tailwindcss`,
+                  "",
+                  "Initialize Tailwind CSS:",
+                  `npx tailwindcss init`,
+                  "",
+                  "Configure NativeWind in your project (follow NativeWind docs)",
+                  "",
+                  "Add React Native Reusables to your project:",
+                  packageManager === "npm"
+                    ? `npx ${packageName}@latest init`
+                    : packageManager === "pnpm"
+                    ? `pnpx ${packageName}@latest init`
+                    : packageManager === "yarn"
+                    ? `yarn dlx ${packageName}@latest init`
+                    : packageManager === "bun"
+                    ? `bunx --bun ${packageName}@latest init`
+                    : `npx ${packageName}@latest init`,
+                  "",
+                  "The command will automatically configure your project with sensible defaults.",
+                  "",
+                  "Once initialized, you can add components:",
+                  packageManager === "npm"
+                    ? `npx ${packageName}@latest add button --yes --overwrite`
+                    : packageManager === "pnpm"
+                    ? `pnpx ${packageName}@latest add button --yes --overwrite`
+                    : packageManager === "yarn"
+                    ? `yarn dlx ${packageName}@latest add button --yes --overwrite`
+                    : packageManager === "bun"
+                    ? `bunx --bun ${packageName}@latest add button --yes --overwrite`
+                    : `npx ${packageName}@latest add button --yes --overwrite`,
+                  "",
+                  "Install dependencies from the component registry:",
+                  "Check the component's registry entry for required dependencies and install them",
+                  "",
+                  "For iOS development:",
+                  "npx expo install --fix",
+                  "cd ios && pod install",
+                  "",
+                  "For Android development:",
+                  "npx expo install --fix",
+                  "",
+                  "Start your development server:",
+                  "npx expo start",
+                  "",
+                  "For full details, refer to the React Native Reusables documentation:",
+                  "https://github.com/founded-labs/react-native-reusables",
+                ],
+              },
+            };
+            break;
           case "vue":
             guides = {
               default: {
@@ -585,30 +658,30 @@ export const getResourceTemplate = (uri: string) => {
                   "You're all set! Your Vue + Vite project with Tailwind CSS v4 and shadcn-vue is ready!",
                 ],
               },
-            }
-            break
+            };
+            break;
         }
         // Select appropriate guide based on build tool
         const guide =
           guides[buildTool.toLowerCase() as keyof typeof guides] ||
-          guides.default
+          guides.default;
 
         return {
           content: `# ${
             guide.description
           } with ${packageManager}\n\n${guide.steps.join("\n")}`,
           contentType: "text/plain",
-        }
+        };
       } catch (error) {
         return {
           content: `Error generating installation guide: ${
             error instanceof Error ? error.message : String(error)
           }`,
           contentType: "text/plain",
-        }
+        };
       }
-    }
+    };
   }
 
-  return undefined
-}
+  return undefined;
+};

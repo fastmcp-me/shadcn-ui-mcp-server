@@ -52,6 +52,12 @@ claude mcp add shadcn-svelte -- bunx -y @jpisnice/shadcn-ui-mcp-server --framewo
 claude mcp add shadcn-vue -- bunx -y @jpisnice/shadcn-ui-mcp-server --framework vue --github-api-key YOUR_API_KEY
 ```
 
+### React Native
+
+```bash
+claude mcp add shadcn-react-native -- bunx -y @jpisnice/shadcn-ui-mcp-server --framework react-native --github-api-key YOUR_API_KEY
+```
+
 ## 🎯 Usage Examples
 
 ### Component Requests

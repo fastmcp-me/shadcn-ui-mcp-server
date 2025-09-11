@@ -1,6 +1,6 @@
 # Framework Selection
 
-The shadcn/ui MCP Server supports three popular framework implementations. Choose the one that matches your project needs.
+The shadcn/ui MCP Server supports four popular framework implementations. Choose the one that matches your project needs.
 
 ## 🎨 Available Frameworks
 
@@ -9,6 +9,7 @@ The shadcn/ui MCP Server supports three popular framework implementations. Choos
 | **React** (default) | [shadcn/ui](https://ui.shadcn.com/) | [shadcn](https://github.com/shadcn) | `.tsx` | React components from shadcn/ui v4 |
 | **Svelte** | [shadcn-svelte](https://www.shadcn-svelte.com/) | [huntabyte](https://github.com/huntabyte) | `.svelte` | Svelte components from shadcn-svelte |
 | **Vue** | [shadcn-vue](https://www.shadcn-vue.com/) | [unovue](https://github.com/unovue) | `.vue` | Vue components from shadcn-vue |
+| **React Native** | [react-native-reusables](https://github.com/founded-labs/react-native-reusables) | [Founded Labs](https://github.com/founded-labs) | `.tsx` | React Native components from react-native-reusables |
 
 ## 🚀 How to Switch Frameworks
 
@@ -29,6 +30,10 @@ npx @jpisnice/shadcn-ui-mcp-server -f vue
 # Switch back to React
 npx @jpisnice/shadcn-ui-mcp-server --framework react
 npx @jpisnice/shadcn-ui-mcp-server -f react
+
+# React Native
+npx @jpisnice/shadcn-ui-mcp-server --framework react-native
+npx @jpisnice/shadcn-ui-mcp-server -f react-native
 ```
 
 ### Method 2: Environment Variable
@@ -49,6 +54,7 @@ npx @jpisnice/shadcn-ui-mcp-server
 # Or set for single command
 FRAMEWORK=svelte npx @jpisnice/shadcn-ui-mcp-server
 FRAMEWORK=vue npx @jpisnice/shadcn-ui-mcp-server
+FRAMEWORK=react-native npx @jpisnice/shadcn-ui-mcp-server
 ```
 
 ### Method 3: Combined with GitHub Token
@@ -82,6 +88,13 @@ INFO: Repository: unovue/shadcn-vue
 INFO: File extension: .vue
 ```
 
+```bash
+INFO: Framework set to 'react-native' via command line argument
+INFO: MCP Server configured for REACT NATIVE framework
+INFO: Repository: founded-labs/react-native-reusables
+INFO: File extension: .tsx
+```
+
 ## 💡 Use Cases by Framework
 
 ### React (Default)
@@ -100,6 +113,11 @@ INFO: File extension: .vue
 - **Vue component development**
 - **Learning Vue with shadcn patterns**
 
+### React Native
+- **React Native/Expo applications**
+- **Mobile-focused UI development**
+- **Using react-native-reusables components**
+
 ## 🔄 Multi-Framework Development
 
 You can easily switch between frameworks to compare implementations:
@@ -114,6 +132,9 @@ npx @jpisnice/shadcn-ui-mcp-server --framework svelte
 
 npx @jpisnice/shadcn-ui-mcp-server --framework vue
 # Get Vue button component
+
+npx @jpisnice/shadcn-ui-mcp-server --framework react-native
+# Get React Native button component
 ```
 
 ## ⚠️ Important Notes

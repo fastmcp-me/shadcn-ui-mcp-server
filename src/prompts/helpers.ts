@@ -43,11 +43,11 @@ export function getPageTypeSpecificInstructions(pageType: string): string {
    - Combine multiple block patterns as needed
    - Focus on component reusability
    - Ensure consistent design patterns`,
-  }
+  };
 
   return (
     instructions[pageType as keyof typeof instructions] || instructions.custom
-  )
+  );
 }
 
 /**
@@ -67,7 +67,7 @@ export function getOptimizationInstructions(
    - Consider using $effect only when necessary for side effects
    - Implement lazy loading for heavy components
    - Use $state.raw for non-reactive data to avoid unnecessary reactivity overhead
-   - Leverage Svelte's compile-time optimizations`
+   - Leverage Svelte's compile-time optimizations`;
 
       case "vue":
         return `
@@ -76,7 +76,7 @@ export function getOptimizationInstructions(
    - Minimize watchers and use computed properties when possible
    - Leverage Vue's built-in reactivity system efficiently
    - Use shallowRef and shallowReactive for performance-critical scenarios
-   - Implement virtual scrolling for large lists using Vue Virtual Scroller`
+   - Implement virtual scrolling for large lists using Vue Virtual Scroller`;
 
       case "react":
       default:
@@ -87,9 +87,20 @@ export function getOptimizationInstructions(
    - Implement virtual scrolling for large lists
    - Minimize DOM manipulations and use refs efficiently
    - Use lazy loading for heavy components
-   - Consider using React.startTransition for non-urgent updates`
+   - Consider using React.startTransition for non-urgent updates`;
+
+      case "react-native":
+        return `
+   - Use FlatList/SectionList correctly with keyExtractor and getItemLayout where appropriate
+   - Implement React.memo, useMemo, useCallback to reduce re-renders
+   - Use StyleSheet.create and avoid inline styles, especially in lists
+   - For animations: use react-native-reanimated with useAnimatedStyle and useNativeDriver where possible
+   - For gestures: use react-native-gesture-handler to decouple interactions
+   - For images: implement caching with FastImage if used, and specify sizes
+   - Offload heavy computations using InteractionManager.runAfterInteractions
+   - For large lists: implement windowing/virtualization and set initialNumToRender appropriately`;
     }
-  }
+  };
 
   const instructions = {
     performance: getPerformanceInstructions(framework),
@@ -120,10 +131,10 @@ export function getOptimizationInstructions(
    - Implement page transition animations
    - Ensure animations respect reduced motion preferences
    - Use hardware acceleration with transform3d when needed`,
-  }
+  };
 
   return (
     instructions[optimization as keyof typeof instructions] ||
     `Focus on general code quality improvements and ${framework}-specific best practices implementation.`
-  )
+  );
 }
