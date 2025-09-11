@@ -1,0 +1,20 @@
+STDOUT:
+{"result":{"content":[{"type":"text","text":"{\n  \"components\": [\n    \"accordion\",\n    \"alert\",\n    \"alert-dialog\",\n    \"aspect-ratio\",\n    \"auto-badge\",\n    \"avatar\",\n    \"badge\",\n    \"breadcrumb\",\n    \"button\",\n    \"calendar\",\n    \"card\",\n    \"carousel\",\n    \"chart\",\n    \"checkbox\",\n    \"collapsible\",\n    \"command\",\n    \"context-menu\",\n    \"dialog\",\n    \"drawer\",\n    \"dropdown-menu\",\n    \"form\",\n    \"green-button\",\n    \"hover-card\",\n    \"input\",\n    \"input-otp\",\n    \"label\",\n    \"login-form\",\n    \"menubar\",\n    \"navigation-menu\",\n    \"orange-button\",\n    \"pagination\",\n    \"pink-button\",\n    \"popover\",\n    \"progress\",\n    \"purple-button\",\n    \"radio-group\",\n    \"resizable\",\n    \"scroll-area\",\n    \"select\",\n    \"separator\",\n    \"sheet\",\n    \"sidebar\",\n    \"simple-button\",\n    \"skeleton\",\n    \"slider\",\n    \"sonner\",\n    \"switch\",\n    \"table\",\n    \"tabs\",\n    \"testimonial\",\n    \"textarea\",\n    \"toggle\",\n    \"toggle-group\",\n    \"tooltip\",\n    \"zinc-button\"\n  ],\n  \"total\": 55\n}"}]},"jsonrpc":"2.0","id":1}
+
+
+STDERR:
+INFO: Starting Shadcn UI MCP Server...
+INFO: Using default framework: 'react'
+INFO: Using default framework: 'react'
+INFO: MCP Server configured for REACT framework
+INFO: Repository: YashTellis/ui
+INFO: File extension: .tsx
+INFO: Description: React components from YashTellis/ui v4
+INFO: To switch frameworks: set FRAMEWORK=svelte|vue or use --framework svelte|vue
+INFO: Using default framework: 'react'
+WARN: No GitHub API key provided. Rate limited to 60 requests/hour.
+INFO: Setting up request handlers...
+INFO: Handlers setup complete
+INFO: Transport initialized: stdio
+INFO: Server started successfully
+INFO: Using default framework: 'react'

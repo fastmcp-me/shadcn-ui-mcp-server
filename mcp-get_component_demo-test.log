@@ -1,0 +1,20 @@
+STDOUT:
+{"result":{"content":[{"type":"text","text":"import { Button } from \"@/registry/new-york-v4/ui/button\"\n\nexport default function ButtonDemo() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-2 md:flex-row\">\n      <Button>Button</Button>\n    </div>\n  )\n}\n"}]},"jsonrpc":"2.0","id":1}
+
+
+STDERR:
+INFO: Starting Shadcn UI MCP Server...
+INFO: Using default framework: 'react'
+INFO: Using default framework: 'react'
+INFO: MCP Server configured for REACT framework
+INFO: Repository: YashTellis/ui
+INFO: File extension: .tsx
+INFO: Description: React components from YashTellis/ui v4
+INFO: To switch frameworks: set FRAMEWORK=svelte|vue or use --framework svelte|vue
+INFO: Using default framework: 'react'
+WARN: No GitHub API key provided. Rate limited to 60 requests/hour.
+INFO: Setting up request handlers...
+INFO: Handlers setup complete
+INFO: Transport initialized: stdio
+INFO: Server started successfully
+INFO: Using default framework: 'react'

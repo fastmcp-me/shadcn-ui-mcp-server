@@ -1,0 +1,56 @@
+{
+  "mcpServers": {
+    "shadcn-ui-local": {
+      "name": "Shadcn UI Local Server",
+      "description": "Local MCP server for YashTellis/ui components with create_component functionality",
+      "command": "node",
+      "args": [
+        "build/index.js",
+        "--framework",
+        "react"
+      ],
+      "cwd": "c:\\Users\\yashk\\OneDrive\\Desktop\\Tellis\\Server\\shadcn-ui-mcp-server",
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_github_token_here"
+      },
+      "capabilities": {
+        "tools": [
+          {
+            "name": "get_component",
+            "description": "Get React component source code from YashTellis/ui repository"
+          },
+          {
+            "name": "list_components", 
+            "description": "List all available components from YashTellis/ui"
+          },
+          {
+            "name": "get_component_demo",
+            "description": "Get component demo/usage examples"
+          },
+          {
+            "name": "get_component_metadata",
+            "description": "Get component metadata and dependencies"
+          },
+          {
+            "name": "create_component",
+            "description": "Create new components following existing patterns"
+          },
+          {
+            "name": "get_directory_structure",
+            "description": "Browse repository directory structure"
+          },
+          {
+            "name": "get_block",
+            "description": "Get complete UI block implementations"
+          },
+          {
+            "name": "list_blocks",
+            "description": "List all available UI blocks"
+          }
+        ]
+      },
+      "autoRestart": true,
+      "timeout": 30000
+    }
+  }
+}

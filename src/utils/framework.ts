@@ -94,7 +94,7 @@ export function getFrameworkInfo() {
         ? "huntabyte/shadcn-svelte"
         : framework === "vue"
         ? "unovue/shadcn-vue"
-        : "shadcn-ui/ui",
+        : "YashTellis/ui",
     fileExtension:
       framework === "svelte"
         ? ".svelte"
@@ -106,7 +106,7 @@ export function getFrameworkInfo() {
         ? "Svelte components from shadcn-svelte"
         : framework === "vue"
         ? "Vue components from shadcn-vue"
-        : "React components from shadcn/ui v4",
+        : "React components from YashTellis/ui v4",
   }
 }
 
